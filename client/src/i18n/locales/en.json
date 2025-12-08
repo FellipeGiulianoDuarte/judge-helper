@@ -35,7 +35,7 @@
     "time": "Time",
     "start": "START",
     "stop": "STOP",
-    "nextTurn": "NEXT TURN"
+    "clearAll": "CLEAR ALL"
   },
   "language": {
     "select": "Language",

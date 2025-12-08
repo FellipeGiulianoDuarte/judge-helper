@@ -191,7 +191,7 @@ test.describe('Deck Check Page', () => {
     await expect(totalPaper.getByText('60').first()).toBeVisible();
   });
 
-  test('Total should turn yellow when count exceeds 60', async ({ page }) => {
+  test('Total should turn red when count exceeds 60', async ({ page }) => {
     const creaturesSection = page.locator('div', { has: page.getByText(/^creatures$/i) }).first();
 
     // Add cards to exceed 60
@@ -201,5 +201,17 @@ test.describe('Deck Check Page', () => {
 
     const totalPaper = page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^total$/i) });
     await expect(totalPaper.getByText('64').first()).toBeVisible();
+  });
+
+  test('Creatures counter should be visible with styling', async ({ page }) => {
+    const creaturesPaper = page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^creatures$/i) }).first();
+    await expect(creaturesPaper).toBeVisible();
+    
+    // Verify the Paper has custom border styling
+    const hasCustomStyle = await creaturesPaper.evaluate((el) => {
+      return el.hasAttribute('style');
+    });
+    
+    expect(hasCustomStyle).toBe(true);
   });
 });

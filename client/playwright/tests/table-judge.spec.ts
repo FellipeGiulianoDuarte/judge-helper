@@ -25,10 +25,10 @@ test.describe('Table Judge Page', () => {
     await expect(page.getByText('0s', { exact: true })).toBeVisible();
   });
 
-  test('should display START, STOP, and NEXT TURN buttons', async ({ page }) => {
+  test('should display START, STOP, and CLEAR ALL buttons', async ({ page }) => {
     await expect(page.getByRole('button', { name: /start/i })).toBeVisible();
     await expect(page.getByRole('button', { name: /stop/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /next turn/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /clear all/i })).toBeVisible();
   });
 
   test('should increment action counter when clicking action button', async ({ page }) => {
@@ -96,13 +96,13 @@ test.describe('Table Judge Page', () => {
     expect(timerText1).toBe(timerText2);
   });
 
-  test('should reset all counters and timer when clicking NEXT TURN', async ({ page }) => {
+  test('should reset all counters and timer when clicking CLEAR ALL', async ({ page }) => {
     await page.getByRole('button', { name: /supporter/i }).click();
     await page.getByRole('button', { name: /energy/i }).click();
     await page.getByRole('button', { name: /start/i }).click();
     await page.waitForTimeout(1000);
     
-    await page.getByRole('button', { name: /next turn/i }).click();
+    await page.getByRole('button', { name: /clear all/i }).click();
     
     const actions = ['Supporter', 'Energy', 'Stadium', 'Retreat', 'Other Game Action'];
     for (const action of actions) {
@@ -113,7 +113,7 @@ test.describe('Table Judge Page', () => {
     await expect(page.getByText('0s', { exact: true })).toBeVisible();
   });
 
-  test('should reset once-per-turn buttons color after NEXT TURN', async ({ page }) => {
+  test('should reset once-per-turn buttons color after CLEAR ALL', async ({ page }) => {
     const supporterButton = page.getByRole('button', { name: /supporter/i });
     
     await supporterButton.click();
@@ -122,7 +122,7 @@ test.describe('Table Judge Page', () => {
       return window.getComputedStyle(el).backgroundColor;
     });
     
-    await page.getByRole('button', { name: /next turn/i }).click();
+    await page.getByRole('button', { name: /clear all/i }).click();
     
     const resetBgColor = await supporterButton.evaluate((el) => {
       return window.getComputedStyle(el).backgroundColor;

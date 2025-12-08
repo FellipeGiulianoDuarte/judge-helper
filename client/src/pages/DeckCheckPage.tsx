@@ -6,7 +6,7 @@ const counterTypes = ['creatures', 'trainer', 'energy'] as const;
 type CounterType = typeof counterTypes[number];
 
 const counterColors: Record<CounterType, string> = {
-  creatures: '#E57373',
+  creatures: '#FBC02D', // yellow
   trainer: '#81C784',
   energy: '#64B5F6',
 };
@@ -112,9 +112,9 @@ export function DeckCheckPage() {
       <Paper 
         p="md" 
         withBorder 
-        bg={total === 60 ? 'green.1' : total > 60 ? 'yellow.1' : 'gray.1'}
+        bg={total === 60 ? 'green.1' : total > 60 ? 'red.1' : 'gray.1'}
         style={{
-          borderColor: total === 60 ? 'var(--mantine-color-green-6)' : total > 60 ? 'var(--mantine-color-yellow-6)' : undefined,
+          borderColor: total === 60 ? 'var(--mantine-color-green-6)' : total > 60 ? 'var(--mantine-color-red-6)' : undefined,
           borderWidth: total >= 60 ? '2px' : '1px',
         }}
       >
@@ -125,7 +125,7 @@ export function DeckCheckPage() {
           <Text 
             fw={700} 
             size="xl"
-            c={total === 60 ? 'green.9' : total > 60 ? 'yellow.9' : undefined}
+            c={total === 60 ? 'green.9' : total > 60 ? 'red.9' : undefined}
           >
             {total}
           </Text>

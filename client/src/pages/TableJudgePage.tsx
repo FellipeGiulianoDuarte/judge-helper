@@ -160,7 +160,7 @@ export function TableJudgePage() {
           <Text size="sm" c="dimmed">
             Pace
           </Text>
-          <Text fw={700} size="2rem">
+          <Text fw={700} size="xl">
             {secondsPerAction}s/action
           </Text>
         </Paper>
@@ -178,7 +178,7 @@ export function TableJudgePage() {
       <Box style={{ flexGrow: 1 }} />
 
       <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleNextTurn}>
-        {t('tableJudge.nextTurn')}
+        {t('tableJudge.clearAll')}
       </Button>
     </Stack>
   );
