@@ -42,6 +42,39 @@ bun run preview      # Preview production build locally
 
 The production build will be created in `client/dist/` directory.
 
+## Deploy to Vercel
+
+### Configuration
+
+The project includes a `vercel.json` file in the `client/` directory to handle SPA routing:
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+### Deploy Steps
+
+1. Install Vercel CLI (optional):
+   ```bash
+   npm i -g vercel
+   ```
+
+2. Set root directory to `client` in Vercel project settings
+
+3. Deploy:
+   - **Build Command**: `bun run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `bun install`
+
+4. The `vercel.json` ensures all routes (e.g., `/table-judge`, `/deck-check`) work correctly by redirecting to `index.html`
+
 ## Running Tests
 
 ```bash
