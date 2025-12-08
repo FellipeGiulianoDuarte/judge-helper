@@ -1,0 +1,46 @@
+{
+  "tabs": {
+    "tableJudge": "Table Judge",
+    "deckCheck": "Deck Check",
+    "documents": "Documents"
+  },
+  "documents": {
+    "title": "Official Documents",
+    "bwCompendium": "BW Compendium (mobile)",
+    "tournamentRules": "Tournament Rules Handbook",
+    "attackSteps": "Roadmap to TCG Attack Steps",
+    "bannedCards": "TCG Banned Card List",
+    "errata": "TCG Errata (PDF)",
+    "promoLegality": "Promo Card Legality Status",
+    "rulebook": "TCG Rulebook (PDF)"
+  },
+  "deckCheck": {
+    "title": "Deck Check",
+    "creatures": "Creatures",
+    "trainer": "Trainer",
+    "energy": "Energy",
+    "total": "Total",
+    "undo": "UNDO",
+    "reset": "RESET",
+    "lookupCard": "LOOKUP CARD"
+  },
+  "tableJudge": {
+    "title": "Table Judge",
+    "supporter": "Supporter",
+    "energy": "Energy",
+    "stadium": "Stadium",
+    "retreat": "Retreat",
+    "otherAction": "Other Game Action",
+    "actionTotal": "Action Total",
+    "time": "Time",
+    "start": "START",
+    "stop": "STOP",
+    "nextTurn": "NEXT TURN"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "pt": "Portuguese",
+    "es": "Spanish"
+  }
+}
