@@ -6,6 +6,8 @@ import { AppLayout } from './components/AppLayout';
 import { DocumentsPage } from './pages/DocumentsPage';
 import { DeckCheckPage } from './pages/DeckCheckPage';
 import { TableJudgePage } from './pages/TableJudgePage';
+import RoundTimerPage from './pages/RoundTimerPage';
+import RoundTimerDisplayPage from './pages/RoundTimerDisplayPage';
 
 function App() {
   const lastTab = localStorage.getItem('lastTab') || '/table-judge';
@@ -13,14 +15,17 @@ function App() {
   return (
     <MantineProvider>
       <BrowserRouter>
-        <AppLayout>
-          <Routes>
-            <Route path="/" element={<Navigate to={lastTab} replace />} />
-            <Route path="/table-judge" element={<TableJudgePage />} />
-            <Route path="/deck-check" element={<DeckCheckPage />} />
-            <Route path="/docs" element={<DocumentsPage />} />
-          </Routes>
-        </AppLayout>
+        <Routes>
+          {/* Full-screen display route without AppLayout */}
+          <Route path="/round-timer-display" element={<RoundTimerDisplayPage />} />
+          
+          {/* Regular routes with AppLayout */}
+          <Route path="/" element={<AppLayout><Navigate to={lastTab} replace /></AppLayout>} />
+          <Route path="/table-judge" element={<AppLayout><TableJudgePage /></AppLayout>} />
+          <Route path="/deck-check" element={<AppLayout><DeckCheckPage /></AppLayout>} />
+          <Route path="/docs" element={<AppLayout><DocumentsPage /></AppLayout>} />
+          <Route path="/round-timer" element={<AppLayout><RoundTimerPage /></AppLayout>} />
+        </Routes>
       </BrowserRouter>
     </MantineProvider>
   );

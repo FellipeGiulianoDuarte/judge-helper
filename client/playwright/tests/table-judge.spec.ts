@@ -21,7 +21,7 @@ test.describe('Table Judge Page', () => {
   });
 
   test('should display timer with initial value 0s', async ({ page }) => {
-    await expect(page.getByText('Time')).toBeVisible();
+    await expect(page.getByText('Time', { exact: true })).toBeVisible();
     await expect(page.getByText('0s', { exact: true })).toBeVisible();
   });
 
