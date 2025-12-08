@@ -3,7 +3,8 @@
     "tableJudge": "Table Judge",
     "deckCheck": "Deck Check",
     "documents": "Documents",
-    "roundTimer": "Round Timer"
+    "roundTimer": "Round Timer",
+    "timeExtensions": "Extensions"
   },
   "documents": {
     "title": "Official Documents",
@@ -55,5 +56,21 @@
     "reset": "RESET",
     "overtime": "OVERTIME",
     "startDisplay": "Start Display"
+  },
+  "timeExtensions": {
+    "title": "Time Extensions",
+    "roundPlaceholder": "Round",
+    "tablePlaceholder": "Table",
+    "minutesPlaceholder": "Minutes",
+    "add": "ADD",
+    "round": "Round",
+    "table": "Table",
+    "minutes": "Min",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "noExtensions": "No extensions registered"
   }
 }

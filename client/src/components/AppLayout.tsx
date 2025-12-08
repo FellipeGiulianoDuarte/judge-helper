@@ -34,6 +34,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <Tabs.Tab value="/table-judge">{t('tabs.tableJudge')}</Tabs.Tab>
           <Tabs.Tab value="/deck-check">{t('tabs.deckCheck')}</Tabs.Tab>
           <Tabs.Tab value="/round-timer">{t('tabs.roundTimer')}</Tabs.Tab>
+          <Tabs.Tab value="/time-extensions">{t('tabs.timeExtensions')}</Tabs.Tab>
           <Tabs.Tab value="/docs">{t('tabs.documents')}</Tabs.Tab>
         </Tabs.List>
       </Tabs>

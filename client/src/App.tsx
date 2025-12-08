@@ -8,6 +8,7 @@ import { DeckCheckPage } from './pages/DeckCheckPage';
 import { TableJudgePage } from './pages/TableJudgePage';
 import RoundTimerPage from './pages/RoundTimerPage';
 import RoundTimerDisplayPage from './pages/RoundTimerDisplayPage';
+import TimeExtensionsPage from './pages/TimeExtensionsPage';
 
 function App() {
   const lastTab = localStorage.getItem('lastTab') || '/table-judge';
@@ -25,6 +26,7 @@ function App() {
           <Route path="/deck-check" element={<AppLayout><DeckCheckPage /></AppLayout>} />
           <Route path="/docs" element={<AppLayout><DocumentsPage /></AppLayout>} />
           <Route path="/round-timer" element={<AppLayout><RoundTimerPage /></AppLayout>} />
+          <Route path="/time-extensions" element={<AppLayout><TimeExtensionsPage /></AppLayout>} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

@@ -3,7 +3,8 @@
     "tableJudge": "Table Judge",
     "deckCheck": "Deck Check",
     "documents": "Documentos",
-    "roundTimer": "Timer de Rodada"
+    "roundTimer": "Timer de Rodada",
+    "timeExtensions": "Extensões"
   },
   "documents": {
     "title": "Documentos Oficiais",
@@ -55,5 +56,21 @@
     "reset": "RESETAR",
     "overtime": "TEMPO EXTRA",
     "startDisplay": "Iniciar Exibição"
+  },
+  "timeExtensions": {
+    "title": "Extensões de Tempo",
+    "roundPlaceholder": "Rodada",
+    "tablePlaceholder": "Mesa",
+    "minutesPlaceholder": "Minutos",
+    "add": "ADICIONAR",
+    "round": "Rodada",
+    "table": "Mesa",
+    "minutes": "Min",
+    "actions": "Ações",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "noExtensions": "Nenhuma extensão registrada"
   }
 }
