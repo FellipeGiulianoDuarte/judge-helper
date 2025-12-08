@@ -7,13 +7,34 @@ interface Document {
 }
 
 const documents: Document[] = [
-  { key: 'bwCompendium', url: '#' },
-  { key: 'tournamentRules', url: '#' },
-  { key: 'attackSteps', url: '#' },
-  { key: 'bannedCards', url: '#' },
-  { key: 'errata', url: '#' },
-  { key: 'promoLegality', url: '#' },
-  { key: 'rulebook', url: '#' },
+  { 
+    key: 'tournamentRules', 
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tournament-rules-handbook-en.pdf' 
+  },
+  { 
+    key: 'penaltyGuidelines', 
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-penalty-guidelines-en.pdf' 
+  },
+  { 
+    key: 'rulebook', 
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/trading-card-game/rulebook/pfl_rulebook_en.pdf' 
+  },
+  { 
+    key: 'bannedCards', 
+    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-banned-card-list' 
+  },
+  { 
+    key: 'tcgTournamentHandbook', 
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tcg-tournament-handbook-en.pdf' 
+  },
+  { 
+    key: 'promoLegality', 
+    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-promo-card-legality-status' 
+  },
+  { 
+    key: 'attackSteps', 
+    url: 'https://www.judgeball.com/guidebook/tcg/attack-steps/' 
+  },
 ];
 
 export function DocumentsPage() {

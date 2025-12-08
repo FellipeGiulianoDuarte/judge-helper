@@ -125,6 +125,11 @@ export function TableJudgePage() {
           justify="space-between"
           rightSection={<Text fw={700}>{state[type]}</Text>}
           onClick={() => handleActionClick(type)}
+          styles={{
+            label: {
+              color: 'var(--mantine-color-dark-6)',
+            },
+          }}
         >
           {t(`tableJudge.${type}`)}
         </Button>

@@ -6,13 +6,13 @@
   },
   "documents": {
     "title": "Official Documents",
-    "bwCompendium": "BW Compendium (mobile)",
     "tournamentRules": "Tournament Rules Handbook",
-    "attackSteps": "Roadmap to TCG Attack Steps",
+    "penaltyGuidelines": "Penalty Guidelines",
+    "rulebook": "TCG Rulebook (PDF)",
     "bannedCards": "TCG Banned Card List",
-    "errata": "TCG Errata (PDF)",
+    "tcgTournamentHandbook": "TCG Tournament Handbook",
     "promoLegality": "Promo Card Legality Status",
-    "rulebook": "TCG Rulebook (PDF)"
+    "attackSteps": "Roadmap to TCG Attack Steps"
   },
   "deckCheck": {
     "title": "Deck Check",

@@ -6,13 +6,13 @@
   },
   "documents": {
     "title": "Documentos Oficiais",
-    "bwCompendium": "BW Compendium (mobile)",
-    "tournamentRules": "Tournament Rules Handbook",
-    "attackSteps": "Roadmap to TCG Attack Steps",
-    "bannedCards": "TCG Banned Card List",
-    "errata": "TCG Errata (PDF)",
-    "promoLegality": "Promo Card Legality Status",
-    "rulebook": "TCG Rulebook (PDF)"
+    "tournamentRules": "Manual de Regras de Torneio",
+    "penaltyGuidelines": "Diretrizes de Penalidades",
+    "rulebook": "Livro de Regras TCG (PDF)",
+    "bannedCards": "Lista de Cartas Banidas TCG",
+    "tcgTournamentHandbook": "Manual de Torneio TCG",
+    "promoLegality": "Status de Legalidade de Cartas Promo",
+    "attackSteps": "Passos de Ataque TCG"
   },
   "deckCheck": {
     "title": "Deck Check",
@@ -30,17 +30,17 @@
     "energy": "Energia",
     "stadium": "Stadium",
     "retreat": "Recuar",
-    "otherAction": "Outra Acao",
-    "actionTotal": "Total de Acoes",
+    "otherAction": "Outra Ação",
+    "actionTotal": "Total de Ações",
     "time": "Tempo",
     "start": "INICIAR",
     "stop": "PARAR",
-    "nextTurn": "PROXIMO TURNO"
+    "nextTurn": "PRÓXIMO TURNO"
   },
   "language": {
     "select": "Idioma",
-    "en": "Ingles",
-    "pt": "Portugues",
+    "en": "Inglês",
+    "pt": "Português",
     "es": "Espanhol"
   }
 }

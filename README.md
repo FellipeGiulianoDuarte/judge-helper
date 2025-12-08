@@ -13,6 +13,8 @@ A mobile-first web application to assist Pokemon TCG judges during tournaments.
 
 ## Getting Started
 
+### Development
+
 ```bash
 cd client
 bun install
@@ -20,6 +22,25 @@ bun vite
 ```
 
 Open http://localhost:5173
+
+### Production
+
+From the root of the project:
+
+```bash
+cd client && bun install && bun run build && bun run preview
+```
+
+Or step by step:
+
+```bash
+cd client
+bun install          # Install dependencies
+bun run build        # Build for production
+bun run preview      # Preview production build locally
+```
+
+The production build will be created in `client/dist/` directory.
 
 ## Running Tests
 
