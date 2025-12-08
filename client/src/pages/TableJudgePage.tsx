@@ -81,6 +81,17 @@ export function TableJudgePage() {
     }));
   }, [state]);
 
+  const handleActionDecrement = useCallback((action: ActionType, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the increment
+    
+    if (state[action] > 0) {
+      setState((prev) => ({
+        ...prev,
+        [action]: prev[action] - 1,
+      }));
+    }
+  }, [state]);
+
   const handleStart = useCallback(() => {
     setIsTimerRunning(true);
   }, []);
@@ -116,23 +127,34 @@ export function TableJudgePage() {
   return (
     <Stack gap="md" p="md">
       {actionTypes.map((type) => (
-        <Button
-          key={type}
-          variant="light"
-          color={getButtonColor(type)}
-          size="lg"
-          fullWidth
-          justify="space-between"
-          rightSection={<Text fw={700}>{state[type]}</Text>}
-          onClick={() => handleActionClick(type)}
-          styles={{
-            label: {
-              color: 'var(--mantine-color-dark-6)',
-            },
-          }}
-        >
-          {t(`tableJudge.${type}`)}
-        </Button>
+        <Group key={type} gap="xs" wrap="nowrap">
+          <Button
+            variant="light"
+            color={getButtonColor(type)}
+            size="lg"
+            style={{ flex: 1 }}
+            justify="space-between"
+            rightSection={<Text fw={700}>{state[type]}</Text>}
+            onClick={() => handleActionClick(type)}
+            styles={{
+              label: {
+                color: 'var(--mantine-color-dark-6)',
+              },
+            }}
+          >
+            {t(`tableJudge.${type}`)}
+          </Button>
+          <Button
+            variant="outline"
+            color="red"
+            size="lg"
+            onClick={(e) => handleActionDecrement(type, e)}
+            disabled={state[type] === 0}
+            style={{ minWidth: '50px' }}
+          >
+            −
+          </Button>
+        </Group>
       ))}
 
       <Paper p="md" withBorder bg="gray.1">

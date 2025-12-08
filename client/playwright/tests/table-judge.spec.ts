@@ -196,4 +196,67 @@ test.describe('Table Judge Page', () => {
     
     await expect(page.getByText('0s/action')).toBeVisible();
   });
+
+  test('should have decrement buttons for all actions', async ({ page }) => {
+    const decrementButtons = page.getByRole('button', { name: '−' });
+    await expect(decrementButtons).toHaveCount(5); // 5 action types
+  });
+
+  test('should decrement counter when clicking minus button', async ({ page }) => {
+    const supporterButton = page.getByRole('button', { name: /supporter/i });
+    
+    // Increment first
+    await supporterButton.click();
+    await expect(supporterButton).toContainText('1');
+    
+    // Then decrement
+    const decrementButton = page.getByRole('button', { name: '−' }).first();
+    await decrementButton.click();
+    await expect(supporterButton).toContainText('0');
+  });
+
+  test('decrement button should be disabled when counter is 0', async ({ page }) => {
+    const decrementButton = page.getByRole('button', { name: '−' }).first();
+    await expect(decrementButton).toBeDisabled();
+  });
+
+  test('decrement button should not affect once-per-turn restriction', async ({ page }) => {
+    const supporterButton = page.getByRole('button', { name: /supporter/i });
+    const decrementButton = page.getByRole('button', { name: '−' }).first();
+    
+    // Click supporter (once-per-turn)
+    await supporterButton.click();
+    await expect(supporterButton).toContainText('1');
+    
+    // Decrement back to 0
+    await decrementButton.click();
+    await expect(supporterButton).toContainText('0');
+    
+    // Should be able to increment again
+    await supporterButton.click();
+    await expect(supporterButton).toContainText('1');
+  });
+
+  test('should decrement other action multiple times', async ({ page }) => {
+    const otherActionButton = page.getByRole('button', { name: /other game action/i });
+    
+    // Increment 3 times
+    await otherActionButton.click();
+    await otherActionButton.click();
+    await otherActionButton.click();
+    await expect(otherActionButton).toContainText('3');
+    
+    // Find the last decrement button (for "Other Game Action")
+    const decrementButtons = page.getByRole('button', { name: '−' });
+    const lastDecrementButton = decrementButtons.last();
+    
+    // Decrement once
+    await lastDecrementButton.click();
+    await expect(otherActionButton).toContainText('2');
+    
+    // Decrement again
+    await lastDecrementButton.click();
+    await expect(otherActionButton).toContainText('1');
+  });
 });
+
