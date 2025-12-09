@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Stack, Paper, Text, Group, Button, Box } from '@mantine/core';
+import { Stack, Paper, Text, Group, Button, Box, useMantineTheme, useComputedColorScheme } from '@mantine/core';
 
 const ONCE_PER_TURN_ACTIONS = ['supporter', 'energy', 'stadium', 'retreat'] as const;
 const actionTypes = [...ONCE_PER_TURN_ACTIONS, 'otherAction'] as const;
@@ -42,6 +42,9 @@ export function TableJudgePage() {
   const [state, setState] = useState<TableJudgeState>(getInitialState);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const theme = useMantineTheme();
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+  const isDark = colorScheme === 'dark';
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -116,6 +119,12 @@ export function TableJudgePage() {
   
   const secondsPerAction = actionTotal > 0 ? Math.floor(state.timerSeconds / actionTotal) : 0;
 
+  const actionTotalTextColor = isDark ? theme.white : theme.colors.dark[7];
+  const actionTotalCardBg = isDark ? theme.colors.dark[6] : theme.colors.gray[0];
+  const paperBg = isDark ? theme.colors.dark[6] : theme.white;
+  const dimmedColor = isDark ? theme.colors.gray[4] : theme.colors.gray[6];
+  const buttonLabelColor = isDark ? theme.white : theme.colors.dark[6];
+
   const getButtonColor = (action: ActionType) => {
     const isOncePerTurn = ONCE_PER_TURN_ACTIONS.includes(action as (typeof ONCE_PER_TURN_ACTIONS)[number]);
     if (isOncePerTurn && state[action] > 0) {
@@ -138,7 +147,7 @@ export function TableJudgePage() {
             onClick={() => handleActionClick(type)}
             styles={{
               label: {
-                color: 'var(--mantine-color-dark-6)',
+                color: buttonLabelColor,
               },
             }}
           >
@@ -157,33 +166,33 @@ export function TableJudgePage() {
         </Group>
       ))}
 
-      <Paper p="md" withBorder bg="gray.1">
+      <Paper p="md" withBorder data-testid="action-total-card" style={{ backgroundColor: actionTotalCardBg }}>
         <Group justify="space-between">
-          <Text fw={600} size="lg">
+          <Text fw={600} size="lg" data-testid="action-total-label" style={{ color: actionTotalTextColor }}>
             {t('tableJudge.actionTotal')}
           </Text>
-          <Text fw={700} size="xl">
+          <Text fw={700} size="xl" data-testid="action-total-value" style={{ color: actionTotalTextColor }}>
             {actionTotal}
           </Text>
         </Group>
       </Paper>
 
       <Group grow gap="sm">
-        <Paper p="md" withBorder style={{ textAlign: 'center' }}>
-          <Text size="sm" c="dimmed">
+        <Paper p="md" withBorder style={{ textAlign: 'center', backgroundColor: paperBg }}>
+          <Text size="sm" style={{ color: dimmedColor }}>
             {t('tableJudge.time')}
           </Text>
-          <Text fw={700} size="2rem">
+          <Text fw={700} size="2rem" style={{ color: actionTotalTextColor }}>
             {state.timerSeconds}s
           </Text>
         </Paper>
         
-        <Paper p="md" withBorder style={{ textAlign: 'center' }}>
-          <Text size="sm" c="dimmed">
-            Pace
+        <Paper p="md" withBorder style={{ textAlign: 'center', backgroundColor: paperBg }}>
+          <Text size="sm" style={{ color: dimmedColor }}>
+            {t('tableJudge.pace')}
           </Text>
-          <Text fw={700} size="xl">
-            {secondsPerAction}s/action
+          <Text fw={700} size="xl" style={{ color: actionTotalTextColor }}>
+            {secondsPerAction}{t('tableJudge.paceUnit')}
           </Text>
         </Paper>
       </Group>

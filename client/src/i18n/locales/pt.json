@@ -28,13 +28,15 @@
   },
   "tableJudge": {
     "title": "Table Judge",
-    "supporter": "Supporter",
+    "supporter": "Treinador",
     "energy": "Energia",
-    "stadium": "Stadium",
+    "stadium": "Estádio",
     "retreat": "Recuar",
     "otherAction": "Outra Ação",
     "actionTotal": "Total de Ações",
     "time": "Tempo",
+    "pace": "Ritmo",
+    "paceUnit": "s/ação",
     "start": "INICIAR",
     "stop": "PARAR",
     "clearAll": "LIMPAR TUDO"
@@ -44,6 +46,9 @@
     "en": "Inglês",
     "pt": "Português",
     "es": "Espanhol"
+  },
+  "theme": {
+    "toggle": "Alternar tema"
   },
   "roundTimer": {
     "title": "Timer de Rodada",
@@ -72,5 +77,10 @@
     "save": "Salvar",
     "cancel": "Cancelar",
     "noExtensions": "Nenhuma extensão registrada"
+  },
+  "credits": {
+    "title": "Créditos",
+    "description": "Agradecimento especial a todos que ajudaram a tornar este projeto possível.",
+    "footer": "Obrigado pelo apoio!"
   }
 }

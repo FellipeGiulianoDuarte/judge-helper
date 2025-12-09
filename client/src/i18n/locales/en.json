@@ -35,6 +35,8 @@
     "otherAction": "Other Game Action",
     "actionTotal": "Action Total",
     "time": "Time",
+    "pace": "Pace",
+    "paceUnit": "s/action",
     "start": "START",
     "stop": "STOP",
     "clearAll": "CLEAR ALL"
@@ -44,6 +46,9 @@
     "en": "English",
     "pt": "Portuguese",
     "es": "Spanish"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
   },
   "roundTimer": {
     "title": "Round Timer",
@@ -72,5 +77,10 @@
     "save": "Save",
     "cancel": "Cancel",
     "noExtensions": "No extensions registered"
+  },
+  "credits": {
+    "title": "Credits",
+    "description": "Special thanks to everyone who helped make this project possible.",
+    "footer": "Thank you for your support!"
   }
 }

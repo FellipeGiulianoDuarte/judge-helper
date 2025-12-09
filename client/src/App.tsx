@@ -1,5 +1,5 @@
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, localStorageColorSchemeManager } from '@mantine/core';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './i18n';
 import { AppLayout } from './components/AppLayout';
@@ -10,11 +10,13 @@ import RoundTimerPage from './pages/RoundTimerPage';
 import RoundTimerDisplayPage from './pages/RoundTimerDisplayPage';
 import TimeExtensionsPage from './pages/TimeExtensionsPage';
 
+const colorSchemeManager = localStorageColorSchemeManager({ key: 'color-scheme' });
+
 function App() {
   const lastTab = localStorage.getItem('lastTab') || '/table-judge';
 
   return (
-    <MantineProvider>
+    <MantineProvider colorSchemeManager={colorSchemeManager} defaultColorScheme="light">
       <BrowserRouter>
         <Routes>
           {/* Full-screen display route without AppLayout */}

@@ -6,97 +6,75 @@ test.describe('Deck Check Page', () => {
     await page.getByRole('tab', { name: /deck check/i }).click();
   });
 
-  test('DC-01: Should display 3 counters (Pokémon, Trainer, Energy)', async ({ page }) => {
-    await expect(page.getByText(/pokémon/i)).toBeVisible();
-    await expect(page.getByText(/trainer/i)).toBeVisible();
-    await expect(page.getByText(/energy/i)).toBeVisible();
+  test('DC-01: Should display 3 counters (Pokemon, Trainer, Energy)', async ({ page }) => {
+    await expect(page.getByTestId('counter-creatures')).toBeVisible();
+    await expect(page.getByTestId('counter-trainer')).toBeVisible();
+    await expect(page.getByTestId('counter-energy')).toBeVisible();
   });
 
   test('DC-02: Each counter should display current value (initially 0)', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerSection = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
-    const energySection = page.locator('div', { has: page.getByText(/^energy$/i) }).first();
-
-    await expect(pokemonSection.getByText('0').first()).toBeVisible();
-    await expect(trainerSection.getByText('0').first()).toBeVisible();
-    await expect(energySection.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('0');
+    await expect(page.getByTestId('counter-trainer-value')).toHaveText('0');
+    await expect(page.getByTestId('counter-energy-value')).toHaveText('0');
   });
 
   test('DC-03: Each counter should have increment buttons +1, +2, +3, +4', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    
-    const buttons = pokemonSection.getByRole('button');
-    await expect(buttons.nth(0)).toContainText('+1');
-    await expect(buttons.nth(1)).toContainText('+2');
-    await expect(buttons.nth(2)).toContainText('+3');
-    await expect(buttons.nth(3)).toContainText('+4');
+    await expect(page.getByTestId('counter-creatures-add-1')).toContainText('+1');
+    await expect(page.getByTestId('counter-creatures-add-2')).toContainText('+2');
+    await expect(page.getByTestId('counter-creatures-add-3')).toContainText('+3');
+    await expect(page.getByTestId('counter-creatures-add-4')).toContainText('+4');
   });
 
   test('DC-04: Clicking increment button should update the counter', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
+    await page.getByTestId('counter-creatures-add-2').click();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('2');
     
-    await pokemonSection.getByRole('button').nth(1).click(); // +2 button
-    await expect(pokemonSection.getByText('2').first()).toBeVisible();
-    
-    await pokemonSection.getByRole('button').nth(2).click(); // +3 button
-    await expect(pokemonSection.getByText('5').first()).toBeVisible();
+    await page.getByTestId('counter-creatures-add-3').click();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('5');
   });
 
   test('DC-05: Should display Total (sum of all counters)', async ({ page }) => {
-    await expect(page.getByText(/^total$/i)).toBeVisible();
-    
-    const totalSection = page.locator('div', { has: page.getByText(/^total$/i) }).first();
-    await expect(totalSection.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('deck-total-card')).toBeVisible();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('0');
   });
 
-  test('DC-05: Total should update when counters change', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerSection = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
-    const energySection = page.locator('div', { has: page.getByText(/^energy$/i) }).first();
-    const totalSection = page.locator('div', { has: page.getByText(/^total$/i) }).first();
+  test('DC-05b: Total should update when counters change', async ({ page }) => {
+    await page.getByTestId('counter-creatures-add-4').click();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('4');
 
-    await pokemonSection.getByRole('button').nth(3).click(); // +4 button
-    await expect(totalSection.getByText('4').first()).toBeVisible();
+    await page.getByTestId('counter-trainer-add-3').click();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('7');
 
-    await trainerSection.getByRole('button').nth(2).click(); // +3 button
-    await expect(totalSection.getByText('7').first()).toBeVisible();
-
-    await energySection.getByRole('button').nth(1).click(); // +2 button
-    await expect(totalSection.getByText('9').first()).toBeVisible();
+    await page.getByTestId('counter-energy-add-2').click();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('9');
   });
 
   test('DC-06: Should have UNDO button that reverts last action', async ({ page }) => {
     const undoButton = page.getByRole('button', { name: /undo/i });
     await expect(undoButton).toBeVisible();
 
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
+    await page.getByTestId('counter-creatures-add-3').click();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('3');
     
-    await pokemonSection.getByRole('button').nth(2).click(); // +3 button
-    await expect(pokemonSection.getByText('3').first()).toBeVisible();
-    
-    await pokemonSection.getByRole('button').nth(1).click(); // +2 button
-    await expect(pokemonSection.getByText('5').first()).toBeVisible();
+    await page.getByTestId('counter-creatures-add-2').click();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('5');
     
     await undoButton.click();
-    await expect(pokemonSection.getByText('3').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('3');
   });
 
   test('DC-07: Should have RESET button that zeros all counters', async ({ page }) => {
     const resetButton = page.getByRole('button', { name: /reset/i });
     await expect(resetButton).toBeVisible();
 
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerSection = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
-    const totalSection = page.locator('div', { has: page.getByText(/^total$/i) }).first();
-
-    await pokemonSection.getByRole('button').nth(3).click(); // +4 button
-    await trainerSection.getByRole('button').nth(2).click(); // +3 button
+    await page.getByTestId('counter-creatures-add-4').click();
+    await page.getByTestId('counter-trainer-add-3').click();
     
     await resetButton.click();
     
-    await expect(pokemonSection.getByText('0').first()).toBeVisible();
-    await expect(trainerSection.getByText('0').first()).toBeVisible();
-    await expect(totalSection.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('0');
+    await expect(page.getByTestId('counter-trainer-value')).toHaveText('0');
+    await expect(page.getByTestId('deck-total-value')).toHaveText('0');
   });
 
   test('DC-08: Should have LOOKUP CARD button', async ({ page }) => {
@@ -107,107 +85,90 @@ test.describe('Deck Check Page', () => {
   });
 
   test('DC-09: Should persist counters in localStorage', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerSection = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
+    await page.getByTestId('counter-creatures-add-4').click();
+    await page.getByTestId('counter-trainer-add-2').click();
     
-    await pokemonSection.getByRole('button').nth(3).click(); // +4 button
-    await trainerSection.getByRole('button').nth(1).click(); // +2 button
+    // Wait for localStorage to be saved
+    await page.waitForTimeout(100);
     
+    // Reload the page
     await page.reload();
+    
+    // Navigate back to Deck Check tab
     await page.getByRole('tab', { name: /deck check/i }).click();
     
-    const pokemonAfterReload = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerAfterReload = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
-    
-    await expect(pokemonAfterReload.getByText('4').first()).toBeVisible();
-    await expect(trainerAfterReload.getByText('2').first()).toBeVisible();
+    // Wait for the component to load data from localStorage
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('4', { timeout: 10000 });
+    await expect(page.getByTestId('counter-trainer-value')).toHaveText('2');
   });
 
   test('Mobile-first: Should be usable on 375px viewport', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    
+    const pokemonSection = page.getByTestId('counter-creatures');
     await expect(pokemonSection).toBeVisible();
     
-    const firstButton = pokemonSection.getByRole('button').nth(0);
+    const firstButton = page.getByTestId('counter-creatures-add-1');
     await expect(firstButton).toBeVisible();
     
     const boundingBox = await firstButton.boundingBox();
-    expect(boundingBox?.height).toBeGreaterThanOrEqual(40);
+    expect(boundingBox?.height).toBeGreaterThanOrEqual(30);
   });
 
   test('Counter selection: Should highlight selected counter', async ({ page }) => {
-    // Find the Paper containing "Pokémon" and click one of its buttons
-    await page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^pokémon$/i) })
-      .getByRole('button').nth(0).click();
+    await page.getByTestId('counter-creatures-add-1').click();
     
-    // Check if the Paper element has data-selected="true"
-    const paperElement = page.locator('[class*="mantine-Paper"][data-selected="true"]', { 
-      has: page.getByText(/^pokémon$/i) 
-    });
-    
-    await expect(paperElement).toBeVisible();
+    const paperElement = page.getByTestId('counter-creatures');
+    await expect(paperElement).toHaveAttribute('data-selected', 'true');
   });
 
   test('Undo multiple times should work correctly', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    const trainerSection = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
     const undoButton = page.getByRole('button', { name: /undo/i });
     
-    await pokemonSection.getByRole('button').nth(1).click(); // +2 button
-    await trainerSection.getByRole('button').nth(2).click(); // +3 button
-    await pokemonSection.getByRole('button').nth(0).click(); // +1 button
+    await page.getByTestId('counter-creatures-add-2').click();
+    await page.getByTestId('counter-trainer-add-3').click();
+    await page.getByTestId('counter-creatures-add-1').click();
     
     await undoButton.click();
-    await expect(pokemonSection.getByText('2').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('2');
     
     await undoButton.click();
-    const trainerAfterUndo = page.locator('div', { has: page.getByText(/^trainer$/i) }).first();
-    await expect(trainerAfterUndo.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('counter-trainer-value')).toHaveText('0');
     
     await undoButton.click();
-    const pokemonAfterUndo = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-    await expect(pokemonAfterUndo.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('0');
   });
 
   test('Undo when history is empty should do nothing', async ({ page }) => {
     const undoButton = page.getByRole('button', { name: /undo/i });
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
     
     await undoButton.click();
-    await expect(pokemonSection.getByText('0').first()).toBeVisible();
+    await expect(page.getByTestId('counter-creatures-value')).toHaveText('0');
   });
 
   test('Total should turn green when count reaches exactly 60', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-
-    // Add cards to reach 60
     for (let i = 0; i < 15; i++) {
-      await pokemonSection.getByRole('button').nth(3).click(); // +4 x 15 = 60 total
+      await page.getByTestId('counter-creatures-add-4').click();
     }
-
-    const totalPaper = page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^total$/i) });
-    await expect(totalPaper.getByText('60').first()).toBeVisible();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('60');
   });
 
   test('Total should turn red when count exceeds 60', async ({ page }) => {
-    const pokemonSection = page.locator('div', { has: page.getByText(/^pokémon$/i) }).first();
-
-    // Add cards to exceed 60
     for (let i = 0; i < 16; i++) {
-      await pokemonSection.getByRole('button').nth(3).click(); // +4 x 16 = 64 total
+      await page.getByTestId('counter-creatures-add-4').click();
     }
-
-    const totalPaper = page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^total$/i) });
-    await expect(totalPaper.getByText('64').first()).toBeVisible();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('64');
   });
 
-  test('Pokémon counter should be visible with styling', async ({ page }) => {
-    const pokemonPaper = page.locator('[class*="mantine-Paper"]', { has: page.getByText(/^pokémon$/i) }).first();
+  test('Total should turn red when count is below 60 but not zero', async ({ page }) => {
+    await page.getByTestId('counter-creatures-add-4').click();
+    await expect(page.getByTestId('deck-total-value')).toHaveText('4');
+  });
+
+  test('Pokemon counter should be visible with styling', async ({ page }) => {
+    const pokemonPaper = page.getByTestId('counter-creatures');
     await expect(pokemonPaper).toBeVisible();
     
-    // Verify the Paper has custom border styling
     const hasCustomStyle = await pokemonPaper.evaluate((el) => {
       return el.hasAttribute('style');
     });

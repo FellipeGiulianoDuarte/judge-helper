@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Stack, Paper, Text } from '@mantine/core';
+import { Stack, Paper, Text, useMantineTheme, useComputedColorScheme } from '@mantine/core';
 
 interface Document {
   key: string;
@@ -39,12 +39,18 @@ const documents: Document[] = [
 
 export function DocumentsPage() {
   const { t } = useTranslation();
+  const theme = useMantineTheme();
+  const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+  const isDark = colorScheme === 'dark';
+  const cardBackground = isDark ? theme.colors.dark[6] : theme.white;
+  const textColor = isDark ? theme.white : theme.colors.dark[7];
 
   return (
     <Stack gap="sm" p="md">
       {documents.map((doc) => (
         <Paper
           key={doc.key}
+          data-testid="document-card"
           component="a"
           href={doc.url}
           target="_blank"
@@ -57,9 +63,10 @@ export function DocumentsPage() {
             alignItems: 'center',
             textDecoration: 'none',
             cursor: 'pointer',
+            backgroundColor: cardBackground,
           }}
         >
-          <Text c="dark" fw={500}>
+          <Text fw={500} data-testid="document-card-text" style={{ color: textColor }}>
             {t(`documents.${doc.key}`)}
           </Text>
         </Paper>
