@@ -1,24 +1,27 @@
 {
   "name": "Judge Helper",
-  "short_name": "Judge Helper",
+  "short_name": "Judge",
   "description": "Pokemon TCG Judge Helper - Tools for tournament judges",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1b1e",
+  "scope": "/",
+  "background_color": "#ffffff",
   "theme_color": "#228be6",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/favicon.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots": []
 }
