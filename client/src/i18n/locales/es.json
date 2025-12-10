@@ -39,7 +39,19 @@
     "paceUnit": "s/acción",
     "start": "INICIAR",
     "stop": "PARAR",
-    "clearAll": "LIMPIAR TODO"
+    "clearAll": "LIMPIAR TODO",
+    "draw": "Robar",
+    "prizes": "Premios",
+    "nextTurn": "SIGUIENTE TURNO",
+    "turnHistory": "Historial de Turnos",
+    "player1": "Jugador 1",
+    "player2": "Jugador 2",
+    "turn": "Turno",
+    "confirmClearTitle": "Confirmar Limpieza",
+    "confirmClearMessage": "¿Está seguro de que desea borrar todos los datos incluyendo el historial de turnos?",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "noHistory": "No hay turnos registrados aún"
   },
   "language": {
     "select": "Idioma",

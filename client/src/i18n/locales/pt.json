@@ -39,7 +39,19 @@
     "paceUnit": "s/ação",
     "start": "INICIAR",
     "stop": "PARAR",
-    "clearAll": "LIMPAR TUDO"
+    "clearAll": "LIMPAR TUDO",
+    "draw": "Compra",
+    "prizes": "Prêmios",
+    "nextTurn": "PRÓXIMO TURNO",
+    "turnHistory": "Histórico de Turnos",
+    "player1": "Jogador 1",
+    "player2": "Jogador 2",
+    "turn": "Turno",
+    "confirmClearTitle": "Confirmar Limpeza",
+    "confirmClearMessage": "Tem certeza que deseja limpar todos os dados incluindo o histórico de turnos?",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "noHistory": "Nenhum turno registrado ainda"
   },
   "language": {
     "select": "Idioma",

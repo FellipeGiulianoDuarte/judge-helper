@@ -39,7 +39,19 @@
     "paceUnit": "s/action",
     "start": "START",
     "stop": "STOP",
-    "clearAll": "CLEAR ALL"
+    "clearAll": "CLEAR ALL",
+    "draw": "Draw",
+    "prizes": "Prizes",
+    "nextTurn": "NEXT TURN",
+    "turnHistory": "Turn History",
+    "player1": "Player 1",
+    "player2": "Player 2",
+    "turn": "Turn",
+    "confirmClearTitle": "Confirm Clear All",
+    "confirmClearMessage": "Are you sure you want to clear all data including turn history?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "noHistory": "No turns recorded yet"
   },
   "language": {
     "select": "Language",

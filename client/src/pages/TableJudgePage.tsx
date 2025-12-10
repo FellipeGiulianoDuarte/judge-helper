@@ -1,11 +1,39 @@
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Stack, Paper, Text, Group, Button, Box, useMantineTheme, useComputedColorScheme } from '@mantine/core';
+import {
+  Stack,
+  Paper,
+  Text,
+  Group,
+  Button,
+  Box,
+  Checkbox,
+  Modal,
+  ScrollArea,
+  Divider,
+  Badge,
+  useMantineTheme,
+  useComputedColorScheme,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 const ONCE_PER_TURN_ACTIONS = ['supporter', 'energy', 'stadium', 'retreat'] as const;
 const actionTypes = [...ONCE_PER_TURN_ACTIONS, 'otherAction'] as const;
 
 type ActionType = (typeof actionTypes)[number];
+
+interface TurnRecord {
+  player: 1 | 2;
+  turnNumber: number;
+  supporter: number;
+  energy: number;
+  stadium: number;
+  retreat: number;
+  otherAction: number;
+  draw: boolean;
+  prizes: number;
+  timerSeconds: number;
+}
 
 interface TableJudgeState {
   supporter: number;
@@ -13,7 +41,12 @@ interface TableJudgeState {
   stadium: number;
   retreat: number;
   otherAction: number;
+  draw: boolean;
+  prizes: number;
   timerSeconds: number;
+  currentPlayer: 1 | 2;
+  turnNumber: number;
+  turnHistory: TurnRecord[];
 }
 
 const STORAGE_KEY = 'tableJudgeState';
@@ -22,7 +55,20 @@ const getInitialState = (): TableJudgeState => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      return {
+        supporter: parsed.supporter ?? 0,
+        energy: parsed.energy ?? 0,
+        stadium: parsed.stadium ?? 0,
+        retreat: parsed.retreat ?? 0,
+        otherAction: parsed.otherAction ?? 0,
+        draw: parsed.draw ?? false,
+        prizes: parsed.prizes ?? 0,
+        timerSeconds: parsed.timerSeconds ?? 0,
+        currentPlayer: parsed.currentPlayer ?? 1,
+        turnNumber: parsed.turnNumber ?? 1,
+        turnHistory: parsed.turnHistory ?? [],
+      };
     }
   } catch {
     // ignore parse errors
@@ -33,7 +79,12 @@ const getInitialState = (): TableJudgeState => {
     stadium: 0,
     retreat: 0,
     otherAction: 0,
+    draw: false,
+    prizes: 0,
     timerSeconds: 0,
+    currentPlayer: 1,
+    turnNumber: 1,
+    turnHistory: [],
   };
 };
 
@@ -103,7 +154,71 @@ export function TableJudgePage() {
     setIsTimerRunning(false);
   }, []);
 
+  const handlePrizesClick = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      prizes: prev.prizes + 1,
+    }));
+  }, []);
+
+  const handlePrizesDecrement = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (state.prizes > 0) {
+        setState((prev) => ({
+          ...prev,
+          prizes: prev.prizes - 1,
+        }));
+      }
+    },
+    [state.prizes]
+  );
+
+  const handleDrawToggle = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      draw: !prev.draw,
+    }));
+  }, []);
+
   const handleNextTurn = useCallback(() => {
+    setIsTimerRunning(false);
+
+    const turnRecord: TurnRecord = {
+      player: state.currentPlayer,
+      turnNumber: state.turnNumber,
+      supporter: state.supporter,
+      energy: state.energy,
+      stadium: state.stadium,
+      retreat: state.retreat,
+      otherAction: state.otherAction,
+      draw: state.draw,
+      prizes: state.prizes,
+      timerSeconds: state.timerSeconds,
+    };
+
+    setState((prev) => ({
+      supporter: 0,
+      energy: 0,
+      stadium: 0,
+      retreat: 0,
+      otherAction: 0,
+      draw: false,
+      prizes: 0,
+      timerSeconds: 0,
+      currentPlayer: prev.currentPlayer === 1 ? 2 : 1,
+      turnNumber: prev.turnNumber + 1,
+      turnHistory: [turnRecord, ...prev.turnHistory],
+    }));
+  }, [state]);
+
+  const [confirmModalOpened, { open: openConfirmModal, close: closeConfirmModal }] = useDisclosure(false);
+
+  const handleClearAllClick = useCallback(() => {
+    openConfirmModal();
+  }, [openConfirmModal]);
+
+  const handleConfirmClearAll = useCallback(() => {
     setIsTimerRunning(false);
     setState({
       supporter: 0,
@@ -111,9 +226,15 @@ export function TableJudgePage() {
       stadium: 0,
       retreat: 0,
       otherAction: 0,
+      draw: false,
+      prizes: 0,
       timerSeconds: 0,
+      currentPlayer: 1,
+      turnNumber: 1,
+      turnHistory: [],
     });
-  }, []);
+    closeConfirmModal();
+  }, [closeConfirmModal]);
 
   const actionTotal = state.supporter + state.energy + state.stadium + state.retreat + state.otherAction;
   
@@ -124,6 +245,8 @@ export function TableJudgePage() {
   const paperBg = isDark ? theme.colors.dark[6] : theme.white;
   const dimmedColor = isDark ? theme.colors.gray[4] : theme.colors.gray[6];
   const buttonLabelColor = isDark ? theme.white : theme.colors.dark[6];
+  const historyBg = isDark ? theme.colors.dark[7] : theme.colors.gray[1];
+  const historyEntryBg = isDark ? theme.colors.dark[6] : theme.white;
 
   const getButtonColor = (action: ActionType) => {
     const isOncePerTurn = ONCE_PER_TURN_ACTIONS.includes(action as (typeof ONCE_PER_TURN_ACTIONS)[number]);
@@ -135,6 +258,24 @@ export function TableJudgePage() {
 
   return (
     <Stack gap="md" p="md">
+      {/* Draw Checkbox */}
+      <Paper p="md" withBorder style={{ backgroundColor: paperBg }}>
+        <Checkbox
+          label={t('tableJudge.draw')}
+          checked={state.draw}
+          onChange={handleDrawToggle}
+          size="lg"
+          styles={{
+            label: {
+              color: buttonLabelColor,
+              fontWeight: 600,
+              fontSize: '1rem',
+            },
+          }}
+        />
+      </Paper>
+
+      {/* Action Buttons */}
       {actionTypes.map((type) => (
         <Group key={type} gap="xs" wrap="nowrap">
           <Button
@@ -166,6 +307,37 @@ export function TableJudgePage() {
         </Group>
       ))}
 
+      {/* Prizes Counter */}
+      <Group gap="xs" wrap="nowrap">
+        <Button
+          variant="light"
+          color="yellow"
+          size="lg"
+          style={{ flex: 1 }}
+          justify="space-between"
+          rightSection={<Text fw={700}>{state.prizes}</Text>}
+          onClick={handlePrizesClick}
+          styles={{
+            label: {
+              color: buttonLabelColor,
+            },
+          }}
+        >
+          {t('tableJudge.prizes')}
+        </Button>
+        <Button
+          variant="outline"
+          color="red"
+          size="lg"
+          onClick={handlePrizesDecrement}
+          disabled={state.prizes === 0}
+          style={{ minWidth: '50px' }}
+        >
+          −
+        </Button>
+      </Group>
+
+      {/* Action Total */}
       <Paper p="md" withBorder data-testid="action-total-card" style={{ backgroundColor: actionTotalCardBg }}>
         <Group justify="space-between">
           <Text fw={600} size="lg" data-testid="action-total-label" style={{ color: actionTotalTextColor }}>
@@ -177,6 +349,7 @@ export function TableJudgePage() {
         </Group>
       </Paper>
 
+      {/* Timer and Pace */}
       <Group grow gap="sm">
         <Paper p="md" withBorder style={{ textAlign: 'center', backgroundColor: paperBg }}>
           <Text size="sm" style={{ color: dimmedColor }}>
@@ -197,6 +370,7 @@ export function TableJudgePage() {
         </Paper>
       </Group>
 
+      {/* Timer Controls */}
       <Group grow gap="sm">
         <Button variant="filled" color="green" size="lg" onClick={handleStart}>
           {t('tableJudge.start')}
@@ -206,11 +380,110 @@ export function TableJudgePage() {
         </Button>
       </Group>
 
+      {/* Next Turn Button */}
+      <Button variant="filled" color="blue" size="xl" fullWidth onClick={handleNextTurn}>
+        {t('tableJudge.nextTurn')}
+      </Button>
+
+      {/* Turn History */}
+      <Paper p="md" withBorder data-testid="turn-history" style={{ backgroundColor: historyBg }}>
+        <Text fw={600} size="lg" mb="sm" style={{ color: actionTotalTextColor }}>
+          {t('tableJudge.turnHistory')}
+        </Text>
+
+        {state.turnHistory.length === 0 ? (
+          <Text size="sm" c="dimmed" ta="center" py="md">
+            {t('tableJudge.noHistory')}
+          </Text>
+        ) : (
+          <ScrollArea.Autosize mah={250}>
+            <Stack gap="xs">
+              {state.turnHistory.map((turn, index) => (
+                <Paper
+                  key={index}
+                  p="sm"
+                  withBorder
+                  data-testid="turn-entry"
+                  style={{ backgroundColor: historyEntryBg }}
+                >
+                  <Group justify="space-between" mb="xs">
+                    <Badge color={turn.player === 1 ? 'blue' : 'orange'} size="lg">
+                      {turn.player === 1 ? t('tableJudge.player1') : t('tableJudge.player2')}
+                    </Badge>
+                    <Text size="sm" c="dimmed">
+                      {t('tableJudge.turn')} {turn.turnNumber}
+                    </Text>
+                  </Group>
+                  <Divider mb="xs" />
+                  <Group gap="xs" wrap="wrap">
+                    {turn.draw && (
+                      <Badge variant="light" color="teal" size="sm">
+                        {t('tableJudge.draw')} ✓
+                      </Badge>
+                    )}
+                    {turn.supporter > 0 && (
+                      <Badge variant="light" color="violet" size="sm">
+                        {t('tableJudge.supporter')}: {turn.supporter}
+                      </Badge>
+                    )}
+                    {turn.energy > 0 && (
+                      <Badge variant="light" color="yellow" size="sm">
+                        {t('tableJudge.energy')}: {turn.energy}
+                      </Badge>
+                    )}
+                    {turn.stadium > 0 && (
+                      <Badge variant="light" color="cyan" size="sm">
+                        {t('tableJudge.stadium')}: {turn.stadium}
+                      </Badge>
+                    )}
+                    {turn.retreat > 0 && (
+                      <Badge variant="light" color="gray" size="sm">
+                        {t('tableJudge.retreat')}: {turn.retreat}
+                      </Badge>
+                    )}
+                    {turn.otherAction > 0 && (
+                      <Badge variant="light" color="pink" size="sm">
+                        {t('tableJudge.otherAction')}: {turn.otherAction}
+                      </Badge>
+                    )}
+                    {turn.prizes > 0 && (
+                      <Badge variant="light" color="red" size="sm">
+                        {t('tableJudge.prizes')}: {turn.prizes}
+                      </Badge>
+                    )}
+                  </Group>
+                </Paper>
+              ))}
+            </Stack>
+          </ScrollArea.Autosize>
+        )}
+      </Paper>
+
       <Box style={{ flexGrow: 1 }} />
 
-      <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleNextTurn}>
+      {/* Clear All Button */}
+      <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleClearAllClick}>
         {t('tableJudge.clearAll')}
       </Button>
+
+      {/* Confirmation Modal */}
+      <Modal
+        opened={confirmModalOpened}
+        onClose={closeConfirmModal}
+        title={t('tableJudge.confirmClearTitle')}
+        centered
+        size="sm"
+      >
+        <Text mb="lg">{t('tableJudge.confirmClearMessage')}</Text>
+        <Group justify="flex-end" gap="sm">
+          <Button variant="outline" onClick={closeConfirmModal}>
+            {t('tableJudge.cancel')}
+          </Button>
+          <Button color="red" onClick={handleConfirmClearAll}>
+            {t('tableJudge.confirm')}
+          </Button>
+        </Group>
+      </Modal>
     </Stack>
   );
 }

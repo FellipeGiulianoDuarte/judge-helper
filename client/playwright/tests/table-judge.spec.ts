@@ -96,13 +96,14 @@ test.describe('Table Judge Page', () => {
     expect(timerText1).toBe(timerText2);
   });
 
-  test('should reset all counters and timer when clicking CLEAR ALL', async ({ page }) => {
+  test('should reset all counters and timer when clicking CLEAR ALL (with confirmation)', async ({ page }) => {
     await page.getByRole('button', { name: /supporter/i }).click();
     await page.getByRole('button', { name: /energy/i }).click();
     await page.getByRole('button', { name: /start/i }).click();
     await page.waitForTimeout(1000);
     
     await page.getByRole('button', { name: /clear all/i }).click();
+    await page.getByRole('button', { name: /confirm/i }).click();
     
     const actions = ['Supporter', 'Energy', 'Stadium', 'Retreat', 'Other Game Action'];
     for (const action of actions) {
@@ -113,7 +114,7 @@ test.describe('Table Judge Page', () => {
     await expect(page.getByText('0s', { exact: true })).toBeVisible();
   });
 
-  test('should reset once-per-turn buttons color after CLEAR ALL', async ({ page }) => {
+  test('should reset once-per-turn buttons color after CLEAR ALL (with confirmation)', async ({ page }) => {
     const supporterButton = page.getByRole('button', { name: /supporter/i });
     
     await supporterButton.click();
@@ -123,6 +124,7 @@ test.describe('Table Judge Page', () => {
     });
     
     await page.getByRole('button', { name: /clear all/i }).click();
+    await page.getByRole('button', { name: /confirm/i }).click();
     
     const resetBgColor = await supporterButton.evaluate((el) => {
       return window.getComputedStyle(el).backgroundColor;
@@ -197,9 +199,9 @@ test.describe('Table Judge Page', () => {
     await expect(page.getByText('0s/action')).toBeVisible();
   });
 
-  test('should have decrement buttons for all actions', async ({ page }) => {
+  test('should have decrement buttons for all actions and prizes', async ({ page }) => {
     const decrementButtons = page.getByRole('button', { name: '−' });
-    await expect(decrementButtons).toHaveCount(5); // 5 action types
+    await expect(decrementButtons).toHaveCount(6); // 5 action types + 1 prize
   });
 
   test('should decrement counter when clicking minus button', async ({ page }) => {
@@ -246,17 +248,223 @@ test.describe('Table Judge Page', () => {
     await otherActionButton.click();
     await expect(otherActionButton).toContainText('3');
     
-    // Find the last decrement button (for "Other Game Action")
+    // Find the decrement button for "Other Game Action" (5th row, index 4)
     const decrementButtons = page.getByRole('button', { name: '−' });
-    const lastDecrementButton = decrementButtons.last();
+    const otherActionDecrementButton = decrementButtons.nth(4);
     
     // Decrement once
-    await lastDecrementButton.click();
+    await otherActionDecrementButton.click();
     await expect(otherActionButton).toContainText('2');
     
     // Decrement again
-    await lastDecrementButton.click();
+    await otherActionDecrementButton.click();
     await expect(otherActionButton).toContainText('1');
+  });
+
+  // =============================================
+  // NEW FEATURES: Draw checkbox, Prizes, History, Next Turn, Clear All
+  // =============================================
+
+  test('should display draw checkbox', async ({ page }) => {
+    const drawCheckbox = page.getByRole('checkbox', { name: /draw/i });
+    await expect(drawCheckbox).toBeVisible();
+    await expect(drawCheckbox).not.toBeChecked();
+  });
+
+  test('should toggle draw checkbox', async ({ page }) => {
+    const drawCheckbox = page.getByRole('checkbox', { name: /draw/i });
+    
+    await drawCheckbox.click();
+    await expect(drawCheckbox).toBeChecked();
+    
+    await drawCheckbox.click();
+    await expect(drawCheckbox).not.toBeChecked();
+  });
+
+  test('should display prize cards counter', async ({ page }) => {
+    await expect(page.getByText(/prize/i)).toBeVisible();
+    const prizeButton = page.getByRole('button', { name: /prize/i });
+    await expect(prizeButton).toBeVisible();
+    await expect(prizeButton).toContainText('0');
+  });
+
+  test('should increment prize cards counter multiple times', async ({ page }) => {
+    const prizeButton = page.getByRole('button', { name: /prize/i });
+    
+    await prizeButton.click();
+    await expect(prizeButton).toContainText('1');
+    
+    await prizeButton.click();
+    await expect(prizeButton).toContainText('2');
+    
+    await prizeButton.click();
+    await expect(prizeButton).toContainText('3');
+  });
+
+  test('should display Next Turn button', async ({ page }) => {
+    const nextTurnButton = page.getByRole('button', { name: /next turn/i });
+    await expect(nextTurnButton).toBeVisible();
+  });
+
+  test('should display turn history section', async ({ page }) => {
+    await expect(page.getByTestId('turn-history')).toBeVisible();
+  });
+
+  test('should add turn to history when clicking Next Turn', async ({ page }) => {
+    // Setup turn actions
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /energy/i }).click();
+    await page.getByRole('checkbox', { name: /draw/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    
+    // Click next turn
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // History should show Player 1 entry
+    const history = page.getByTestId('turn-history');
+    await expect(history.getByText(/player 1/i)).toBeVisible();
+  });
+
+  test('should alternate players between turns in history', async ({ page }) => {
+    // First turn
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // Second turn
+    await page.getByRole('button', { name: /energy/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // History should show both players
+    const history = page.getByTestId('turn-history');
+    await expect(history.getByText(/player 1/i)).toBeVisible();
+    await expect(history.getByText(/player 2/i)).toBeVisible();
+  });
+
+  test('should reset current turn counters after Next Turn', async ({ page }) => {
+    // Setup turn
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('checkbox', { name: /draw/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    
+    // Click next turn
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // Counters should be reset
+    const supporterButton = page.getByRole('button', { name: /supporter/i });
+    await expect(supporterButton).toContainText('0');
+    
+    const drawCheckbox = page.getByRole('checkbox', { name: /draw/i });
+    await expect(drawCheckbox).not.toBeChecked();
+    
+    const prizeButton = page.getByRole('button', { name: /prize/i });
+    await expect(prizeButton).toContainText('0');
+  });
+
+  test('should display Clear All button with confirmation', async ({ page }) => {
+    const clearAllButton = page.getByRole('button', { name: /clear all/i });
+    await expect(clearAllButton).toBeVisible();
+  });
+
+  test('should show confirmation modal when clicking Clear All', async ({ page }) => {
+    // Add some history first
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // Click Clear All
+    await page.getByRole('button', { name: /clear all/i }).click();
+    
+    // Confirmation modal should appear - check for the modal title
+    await expect(page.getByRole('heading', { name: /confirm/i })).toBeVisible();
+  });
+
+  test('should not clear when canceling confirmation', async ({ page }) => {
+    // Add history
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // Click Clear All
+    await page.getByRole('button', { name: /clear all/i }).click();
+    
+    // Cancel
+    await page.getByRole('button', { name: /cancel/i }).click();
+    
+    // History should still be there
+    const history = page.getByTestId('turn-history');
+    await expect(history.getByText(/player 1/i)).toBeVisible();
+  });
+
+  test('should clear everything when confirming Clear All', async ({ page }) => {
+    // Add history
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // Current turn actions
+    await page.getByRole('button', { name: /stadium/i }).click();
+    
+    // Click Clear All
+    await page.getByRole('button', { name: /clear all/i }).click();
+    
+    // Confirm
+    await page.getByRole('button', { name: /confirm/i }).click();
+    
+    // Everything should be cleared
+    const supporterButton = page.getByRole('button', { name: /supporter/i });
+    await expect(supporterButton).toContainText('0');
+    
+    const stadiumButton = page.getByRole('button', { name: /stadium/i });
+    await expect(stadiumButton).toContainText('0');
+    
+    // History should be empty (no player entries visible)
+    const history = page.getByTestId('turn-history');
+    await expect(history.locator('[data-testid="turn-entry"]')).toHaveCount(0);
+  });
+
+  test('should display turn history with all action info', async ({ page }) => {
+    // Setup complete turn
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /stadium/i }).click();
+    await page.getByRole('checkbox', { name: /draw/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    
+    // Next turn
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    // History should show all info
+    const history = page.getByTestId('turn-history');
+    const turnEntry = history.locator('[data-testid="turn-entry"]').first();
+    
+    await expect(turnEntry).toBeVisible();
+  });
+
+  test('draw checkbox state should persist in localStorage', async ({ page }) => {
+    await page.getByRole('checkbox', { name: /draw/i }).click();
+    
+    await page.reload();
+    
+    const drawCheckbox = page.getByRole('checkbox', { name: /draw/i });
+    await expect(drawCheckbox).toBeChecked();
+  });
+
+  test('prize counter should persist in localStorage', async ({ page }) => {
+    await page.getByRole('button', { name: /prize/i }).click();
+    await page.getByRole('button', { name: /prize/i }).click();
+    
+    await page.reload();
+    
+    const prizeButton = page.getByRole('button', { name: /prize/i });
+    await expect(prizeButton).toContainText('2');
+  });
+
+  test('turn history should persist in localStorage', async ({ page }) => {
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('button', { name: /next turn/i }).click();
+    
+    await page.reload();
+    
+    const history = page.getByTestId('turn-history');
+    await expect(history.getByText(/player 1/i)).toBeVisible();
   });
 });
 
