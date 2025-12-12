@@ -14,6 +14,7 @@ import {
   Badge,
   useMantineTheme,
   useComputedColorScheme,
+  Switch,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
@@ -47,6 +48,8 @@ interface TableJudgeState {
   currentPlayer: 1 | 2;
   turnNumber: number;
   turnHistory: TurnRecord[];
+  autostartDraw: boolean;
+  autostartNextTurn: boolean;
 }
 
 const STORAGE_KEY = 'tableJudgeState';
@@ -68,6 +71,8 @@ const getInitialState = (): TableJudgeState => {
         currentPlayer: parsed.currentPlayer ?? 1,
         turnNumber: parsed.turnNumber ?? 1,
         turnHistory: parsed.turnHistory ?? [],
+        autostartDraw: parsed.autostartDraw ?? false,
+        autostartNextTurn: parsed.autostartNextTurn ?? false,
       };
     }
   } catch {
@@ -85,6 +90,8 @@ const getInitialState = (): TableJudgeState => {
     currentPlayer: 1,
     turnNumber: 1,
     turnHistory: [],
+    autostartDraw: false,
+    autostartNextTurn: false,
   };
 };
 
@@ -175,9 +182,29 @@ export function TableJudgePage() {
   );
 
   const handleDrawToggle = useCallback(() => {
+    const newDrawState = !state.draw;
     setState((prev) => ({
       ...prev,
-      draw: !prev.draw,
+      draw: newDrawState,
+    }));
+
+    // Autostart timer se a opção estiver ativada e draw foi marcado
+    if (newDrawState && state.autostartDraw) {
+      setIsTimerRunning(true);
+    }
+  }, [state.draw, state.autostartDraw]);
+
+  const handleAutostartDrawToggle = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      autostartDraw: !prev.autostartDraw,
+    }));
+  }, []);
+
+  const handleAutostartNextTurnToggle = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      autostartNextTurn: !prev.autostartNextTurn,
     }));
   }, []);
 
@@ -209,7 +236,14 @@ export function TableJudgePage() {
       currentPlayer: prev.currentPlayer === 1 ? 2 : 1,
       turnNumber: prev.turnNumber + 1,
       turnHistory: [turnRecord, ...prev.turnHistory],
+      autostartDraw: prev.autostartDraw,
+      autostartNextTurn: prev.autostartNextTurn,
     }));
+
+    // Autostart timer se a opção estiver ativada
+    if (state.autostartNextTurn) {
+      setIsTimerRunning(true);
+    }
   }, [state]);
 
   const [confirmModalOpened, { open: openConfirmModal, close: closeConfirmModal }] = useDisclosure(false);
@@ -232,6 +266,8 @@ export function TableJudgePage() {
       currentPlayer: 1,
       turnNumber: 1,
       turnHistory: [],
+      autostartDraw: false,
+      autostartNextTurn: false,
     });
     closeConfirmModal();
   }, [closeConfirmModal]);
@@ -465,6 +501,46 @@ export function TableJudgePage() {
       <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleClearAllClick}>
         {t('tableJudge.clearAll')}
       </Button>
+
+      {/* Autostart Switches */}
+      <Paper 
+        p="xs" 
+        withBorder 
+        data-testid="autostart-switches-container"
+        style={{ 
+          backgroundColor: paperBg,
+          opacity: 0.85,
+        }}
+      >
+        <Stack gap="xs">
+          <Switch
+            label={t('tableJudge.autostartDraw')}
+            checked={state.autostartDraw}
+            onChange={handleAutostartDrawToggle}
+            size="sm"
+            data-testid="autostart-draw-switch"
+            styles={{
+              label: {
+                color: dimmedColor,
+                fontSize: '0.8rem',
+              },
+            }}
+          />
+          <Switch
+            label={t('tableJudge.autostartNextTurn')}
+            checked={state.autostartNextTurn}
+            onChange={handleAutostartNextTurnToggle}
+            size="sm"
+            data-testid="autostart-next-turn-switch"
+            styles={{
+              label: {
+                color: dimmedColor,
+                fontSize: '0.8rem',
+              },
+            }}
+          />
+        </Stack>
+      </Paper>
 
       {/* Confirmation Modal */}
       <Modal

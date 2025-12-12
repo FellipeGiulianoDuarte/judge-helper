@@ -51,7 +51,9 @@
     "confirmClearMessage": "Are you sure you want to clear all data including turn history?",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "noHistory": "No turns recorded yet"
+    "noHistory": "No turns recorded yet",
+    "autostartDraw": "Autostart on Draw",
+    "autostartNextTurn": "Autostart on Next Turn"
   },
   "language": {
     "select": "Language",

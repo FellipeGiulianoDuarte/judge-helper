@@ -51,7 +51,9 @@
     "confirmClearMessage": "Tem certeza que deseja limpar todos os dados incluindo o histórico de turnos?",
     "confirm": "Confirmar",
     "cancel": "Cancelar",
-    "noHistory": "Nenhum turno registrado ainda"
+    "noHistory": "Nenhum turno registrado ainda",
+    "autostartDraw": "Autostart ao marcar Draw",
+    "autostartNextTurn": "Autostart ao Próximo Turno"
   },
   "language": {
     "select": "Idioma",

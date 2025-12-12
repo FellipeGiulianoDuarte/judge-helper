@@ -51,7 +51,9 @@
     "confirmClearMessage": "¿Está seguro de que desea borrar todos los datos incluyendo el historial de turnos?",
     "confirm": "Confirmar",
     "cancel": "Cancelar",
-    "noHistory": "No hay turnos registrados aún"
+    "noHistory": "No hay turnos registrados aún",
+    "autostartDraw": "Autostart al Robar",
+    "autostartNextTurn": "Autostart al Siguiente Turno"
   },
   "language": {
     "select": "Idioma",
