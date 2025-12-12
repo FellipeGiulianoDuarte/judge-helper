@@ -122,4 +122,95 @@ test.describe('Table Judge - Autostart Switches', () => {
     expect(switchesBox).not.toBeNull();
     expect(switchesBox!.y).toBeGreaterThan(clearAllBox!.y);
   });
+
+  test('should persist autostart switches state in localStorage', async ({ page }) => {
+    // Ativar ambos os switches
+    await page.getByText(/autostart.*draw/i).click();
+    await page.getByText(/autostart.*next turn/i).click();
+
+    // Verificar que estão ativados
+    const drawSwitch = page.getByTestId('autostart-draw-switch');
+    const nextTurnSwitch = page.getByTestId('autostart-next-turn-switch');
+    
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).toBeChecked();
+
+    // Recarregar a página
+    await page.reload();
+
+    // Verificar que os switches continuam ativados
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).toBeChecked();
+  });
+
+  test('should persist autostart switches when one is ON and other is OFF', async ({ page }) => {
+    // Ativar apenas autostart-draw
+    await page.getByText(/autostart.*draw/i).click();
+
+    // Verificar estados
+    const drawSwitch = page.getByTestId('autostart-draw-switch');
+    const nextTurnSwitch = page.getByTestId('autostart-next-turn-switch');
+    
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).not.toBeChecked();
+
+    // Recarregar a página
+    await page.reload();
+
+    // Verificar que os estados foram mantidos
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).not.toBeChecked();
+  });
+
+  test('should preserve autostart switches when clicking Clear All', async ({ page }) => {
+    // Ativar ambos os switches
+    await page.getByText(/autostart.*draw/i).click();
+    await page.getByText(/autostart.*next turn/i).click();
+
+    // Fazer algumas ações
+    await page.getByRole('button', { name: /supporter/i }).click();
+    await page.getByRole('checkbox', { name: /draw/i }).click();
+
+    // Verificar que switches estão ativados
+    const drawSwitch = page.getByTestId('autostart-draw-switch');
+    const nextTurnSwitch = page.getByTestId('autostart-next-turn-switch');
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).toBeChecked();
+
+    // Clicar em Clear All
+    await page.getByRole('button', { name: /clear all/i }).click();
+
+    // Confirmar no modal
+    await page.getByRole('button', { name: /confirm/i }).click();
+
+    // Verificar que os switches foram PRESERVADOS
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).toBeChecked();
+
+    // Verificar que os contadores foram resetados
+    await expect(page.getByTestId('action-total-value')).toHaveText('0');
+    await expect(page.getByRole('checkbox', { name: /draw/i })).not.toBeChecked();
+  });
+
+  test('should preserve only enabled switches after Clear All', async ({ page }) => {
+    // Ativar apenas autostart-draw (deixar next turn OFF)
+    await page.getByText(/autostart.*draw/i).click();
+
+    // Fazer algumas ações
+    await page.getByRole('button', { name: /supporter/i }).click();
+
+    // Verificar estados antes do Clear All
+    const drawSwitch = page.getByTestId('autostart-draw-switch');
+    const nextTurnSwitch = page.getByTestId('autostart-next-turn-switch');
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).not.toBeChecked();
+
+    // Clicar em Clear All e confirmar
+    await page.getByRole('button', { name: /clear all/i }).click();
+    await page.getByRole('button', { name: /confirm/i }).click();
+
+    // Verificar que os switches mantiveram seus estados
+    await expect(drawSwitch).toBeChecked();
+    await expect(nextTurnSwitch).not.toBeChecked();
+  });
 });

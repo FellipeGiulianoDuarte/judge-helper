@@ -7,6 +7,8 @@ const contributors = [
   'Gustavo Almeida',
   'Fabio Maia',
   'Franco',
+  'Celso',
+  'Lucas Horta',
 ];
 
 export function CreditsPage() {

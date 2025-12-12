@@ -466,5 +466,26 @@ test.describe('Table Judge Page', () => {
     const history = page.getByTestId('turn-history');
     await expect(history.getByText(/player 1/i)).toBeVisible();
   });
+
+  test('should toggle draw checkbox by clicking anywhere on the card', async ({ page }) => {
+    // Verificar estado inicial (não marcado)
+    const drawCheckbox = page.getByRole('checkbox', { name: /draw/i });
+    await expect(drawCheckbox).not.toBeChecked();
+    
+    // Localizar o Paper que envolve o checkbox usando data-testid
+    const drawCard = page.getByTestId('draw-card');
+    
+    // Clicar no card (forçar clique para ignorar interceptação)
+    await drawCard.click({ force: true });
+    
+    // Verificar que foi marcado
+    await expect(drawCheckbox).toBeChecked();
+    
+    // Clicar novamente para desmarcar
+    await drawCard.click({ force: true });
+    
+    // Verificar que foi desmarcado
+    await expect(drawCheckbox).not.toBeChecked();
+  });
 });
 

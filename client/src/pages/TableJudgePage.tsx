@@ -23,6 +23,13 @@ const actionTypes = [...ONCE_PER_TURN_ACTIONS, 'otherAction'] as const;
 
 type ActionType = (typeof actionTypes)[number];
 
+// Helper function para formatar tempo em MM:SS
+const formatTime = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 interface TurnRecord {
   player: 1 | 2;
   turnNumber: number;
@@ -254,7 +261,7 @@ export function TableJudgePage() {
 
   const handleConfirmClearAll = useCallback(() => {
     setIsTimerRunning(false);
-    setState({
+    setState((prev) => ({
       supporter: 0,
       energy: 0,
       stadium: 0,
@@ -266,9 +273,9 @@ export function TableJudgePage() {
       currentPlayer: 1,
       turnNumber: 1,
       turnHistory: [],
-      autostartDraw: false,
-      autostartNextTurn: false,
-    });
+      autostartDraw: prev.autostartDraw, // Preservar preferência do usuário
+      autostartNextTurn: prev.autostartNextTurn, // Preservar preferência do usuário
+    }));
     closeConfirmModal();
   }, [closeConfirmModal]);
 
@@ -295,7 +302,13 @@ export function TableJudgePage() {
   return (
     <Stack gap="md" p="md">
       {/* Draw Checkbox */}
-      <Paper p="md" withBorder style={{ backgroundColor: paperBg }}>
+      <Paper 
+        p="md" 
+        withBorder 
+        style={{ backgroundColor: paperBg, cursor: 'pointer' }}
+        onClick={handleDrawToggle}
+        data-testid="draw-card"
+      >
         <Checkbox
           label={t('tableJudge.draw')}
           checked={state.draw}
@@ -443,9 +456,23 @@ export function TableJudgePage() {
                   style={{ backgroundColor: historyEntryBg }}
                 >
                   <Group justify="space-between" mb="xs">
-                    <Badge color={turn.player === 1 ? 'blue' : 'orange'} size="lg">
-                      {turn.player === 1 ? t('tableJudge.player1') : t('tableJudge.player2')}
-                    </Badge>
+                    <Group gap="xs">
+                      <Badge color={turn.player === 1 ? 'blue' : 'orange'} size="lg">
+                        {turn.player === 1 ? t('tableJudge.player1') : t('tableJudge.player2')}
+                      </Badge>
+                      <Text size="xs" c="dimmed" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span>⏱️</span>
+                        {formatTime(turn.timerSeconds)}
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        {(() => {
+                          const totalActions = turn.supporter + turn.energy + turn.stadium + turn.retreat + turn.otherAction;
+                          return totalActions > 0 
+                            ? `(${Math.round(turn.timerSeconds / totalActions)}s/act)` 
+                            : '(0s/act)';
+                        })()}
+                      </Text>
+                    </Group>
                     <Text size="sm" c="dimmed">
                       {t('tableJudge.turn')} {turn.turnNumber}
                     </Text>
