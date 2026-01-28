@@ -171,7 +171,7 @@ export function TableJudgePage() {
   const handlePrizesClick = useCallback(() => {
     setState((prev) => ({
       ...prev,
-      prizes: prev.prizes + 1,
+      prizes: Math.min(prev.prizes + 1, 6),
     }));
   }, []);
 
