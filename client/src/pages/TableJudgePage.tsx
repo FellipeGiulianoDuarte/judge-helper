@@ -302,12 +302,13 @@ export function TableJudgePage() {
   return (
     <Stack gap="md" p="md">
       {/* Draw Checkbox */}
-      <Paper 
-        p="md" 
-        withBorder 
+      <Paper
+        p="md"
+        withBorder
         style={{ backgroundColor: paperBg, cursor: 'pointer' }}
         onClick={handleDrawToggle}
         data-testid="draw-card"
+        data-wizard-draw
       >
         <Checkbox
           label={t('tableJudge.draw')}
@@ -325,8 +326,9 @@ export function TableJudgePage() {
       </Paper>
 
       {/* Action Buttons */}
+      <Box data-wizard-actions>
       {actionTypes.map((type) => (
-        <Group key={type} gap="xs" wrap="nowrap">
+        <Group key={type} gap="xs" wrap="nowrap" mb="md">
           <Button
             variant="light"
             color={getButtonColor(type)}
@@ -355,9 +357,10 @@ export function TableJudgePage() {
           </Button>
         </Group>
       ))}
+      </Box>
 
       {/* Prizes Counter */}
-      <Group gap="xs" wrap="nowrap">
+      <Group gap="xs" wrap="nowrap" data-wizard-prizes>
         <Button
           variant="light"
           color="yellow"
@@ -399,7 +402,7 @@ export function TableJudgePage() {
       </Paper>
 
       {/* Timer and Pace */}
-      <Group grow gap="sm">
+      <Group grow gap="sm" data-wizard-timer-display>
         <Paper p="md" withBorder style={{ textAlign: 'center', backgroundColor: paperBg }}>
           <Text size="sm" style={{ color: dimmedColor }}>
             {t('tableJudge.time')}
@@ -420,7 +423,7 @@ export function TableJudgePage() {
       </Group>
 
       {/* Timer Controls */}
-      <Group grow gap="sm">
+      <Group grow gap="sm" data-wizard-timer-controls>
         <Button variant="filled" color="green" size="lg" onClick={handleStart}>
           {t('tableJudge.start')}
         </Button>
@@ -430,12 +433,12 @@ export function TableJudgePage() {
       </Group>
 
       {/* Next Turn Button */}
-      <Button variant="filled" color="blue" size="xl" fullWidth onClick={handleNextTurn}>
+      <Button variant="filled" color="blue" size="xl" fullWidth onClick={handleNextTurn} data-wizard-next-turn>
         {t('tableJudge.nextTurn')}
       </Button>
 
       {/* Turn History */}
-      <Paper p="md" withBorder data-testid="turn-history" style={{ backgroundColor: historyBg }}>
+      <Paper p="md" withBorder data-testid="turn-history" style={{ backgroundColor: historyBg }} data-wizard-turn-history>
         <Text fw={600} size="lg" mb="sm" style={{ color: actionTotalTextColor }}>
           {t('tableJudge.turnHistory')}
         </Text>
@@ -525,16 +528,17 @@ export function TableJudgePage() {
       <Box style={{ flexGrow: 1 }} />
 
       {/* Clear All Button */}
-      <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleClearAllClick}>
+      <Button variant="filled" color="orange" size="xl" fullWidth onClick={handleClearAllClick} data-wizard-clear-all>
         {t('tableJudge.clearAll')}
       </Button>
 
       {/* Autostart Switches */}
-      <Paper 
-        p="xs" 
-        withBorder 
+      <Paper
+        p="xs"
+        withBorder
         data-testid="autostart-switches-container"
-        style={{ 
+        data-wizard-autostart
+        style={{
           backgroundColor: paperBg,
           opacity: 0.85,
         }}

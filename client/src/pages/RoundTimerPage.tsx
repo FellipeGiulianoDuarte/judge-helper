@@ -186,6 +186,7 @@ export default function RoundTimerPage() {
             value={state.roundName}
             onChange={(e) => setState(prev => ({ ...prev, roundName: e.target.value }))}
             size="lg"
+            data-wizard-round-name
           />
 
           {state.roundName && (
@@ -194,7 +195,7 @@ export default function RoundTimerPage() {
             </Text>
           )}
 
-          <Text size="6rem" fw={700} ta="center" style={{ color: getTimerColor() }}>
+          <Text size="6rem" fw={700} ta="center" style={{ color: getTimerColor() }} data-wizard-round-timer-display>
             {formatTime(state.remainingSeconds)}
           </Text>
 
@@ -204,7 +205,7 @@ export default function RoundTimerPage() {
             </Text>
           )}
 
-          <Group grow gap="xs">
+          <Group grow gap="xs" data-wizard-round-controls>
             <Button onClick={handleStart} color="green" disabled={state.isRunning || state.totalSeconds === 0}>
               {t('roundTimer.start')}
             </Button>
@@ -217,11 +218,12 @@ export default function RoundTimerPage() {
           </Group>
 
           {state.totalSeconds > 0 && (
-            <Button 
+            <Button
               onClick={() => window.open('/round-timer-display', '_blank')}
               variant="filled"
               color="blue"
               size="lg"
+              data-wizard-start-display
             >
               {t('roundTimer.startDisplay')}
             </Button>
@@ -229,7 +231,7 @@ export default function RoundTimerPage() {
         </Stack>
       </Paper>
 
-      <Paper shadow="xs" p="md" withBorder>
+      <Paper shadow="xs" p="md" withBorder data-wizard-presets>
         <Stack gap="md">
           <Text size="lg" fw={600}>
             {t('roundTimer.presets')}

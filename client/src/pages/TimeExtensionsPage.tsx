@@ -125,7 +125,7 @@ export default function TimeExtensionsPage() {
 
   return (
     <Stack gap="lg" p="md">
-      <Paper shadow="xs" p="md" withBorder>
+      <Paper shadow="xs" p="md" withBorder data-wizard-extension-form>
         <Stack gap="md">
           <Text size="lg" fw={600}>
             {t('timeExtensions.title')}
@@ -156,6 +156,7 @@ export default function TimeExtensionsPage() {
         </Stack>
       </Paper>
 
+      <Stack gap="md" data-wizard-extension-table>
       {extensions.length === 0 ? (
         <Paper shadow="xs" p="md" withBorder>
           <Text ta="center" c="dimmed">
@@ -242,6 +243,7 @@ export default function TimeExtensionsPage() {
           </Paper>
         ))
       )}
+      </Stack>
     </Stack>
   );
 }

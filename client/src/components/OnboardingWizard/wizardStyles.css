@@ -1,0 +1,268 @@
+/* Intro.js custom styles for Mantine compatibility */
+
+/* Main tooltip container */
+.introjs-tooltip {
+  font-family: inherit;
+  background-color: var(--mantine-color-body, #fff);
+  color: var(--mantine-color-text, #000);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 320px;
+  min-width: 280px;
+  padding: 0;
+  border: 1px solid var(--mantine-color-default-border, #dee2e6);
+  box-sizing: border-box;
+}
+
+/* Mobile: constrain width */
+@media (max-width: 480px) {
+  .introjs-tooltip {
+    max-width: calc(100vw - 40px);
+    min-width: 260px;
+  }
+}
+
+/* Tooltip header with title */
+.introjs-tooltip-header {
+  padding: 12px 16px 8px;
+  border-bottom: none;
+}
+
+.introjs-tooltip-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--mantine-color-text, #000);
+  margin: 0;
+  padding: 0;
+}
+
+/* Tooltip text content */
+.introjs-tooltiptext {
+  padding: 0 16px 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--mantine-color-text, #000);
+}
+
+.introjs-tooltiptext p {
+  margin: 0 0 8px 0;
+}
+
+/* Custom progress indicator */
+.wizard-content {
+  margin: 0;
+}
+
+.wizard-content p {
+  margin: 0 0 12px 0;
+}
+
+.wizard-progress {
+  font-size: 12px;
+  color: var(--mantine-color-dimmed, #868e96);
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--mantine-color-default-border, #dee2e6);
+}
+
+/* Progress bar */
+.introjs-progress {
+  background-color: var(--mantine-color-default-border, #e9ecef);
+  height: 4px;
+  border-radius: 2px;
+  margin: 0 16px 8px;
+  overflow: hidden;
+}
+
+.introjs-progressbar {
+  background-color: var(--mantine-color-blue-filled, #228be6);
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Button container */
+.introjs-tooltipbuttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--mantine-color-default-border, #dee2e6);
+  gap: 8px;
+  margin: 0;
+}
+
+/* All buttons base style */
+.introjs-button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-shadow: none;
+  box-shadow: none;
+  transition: background-color 150ms ease;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.4;
+}
+
+.introjs-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.introjs-button:hover {
+  text-decoration: none;
+}
+
+/* Skip button - smaller, on the left */
+.introjs-skipbutton {
+  color: var(--mantine-color-dimmed, #868e96);
+  background: transparent;
+  padding: 6px 8px;
+  font-size: 13px;
+  margin-right: auto;
+}
+
+.introjs-skipbutton:hover {
+  color: var(--mantine-color-text, #000);
+  background: transparent;
+}
+
+/* Previous button */
+.introjs-prevbutton {
+  background-color: var(--mantine-color-gray-1, #f1f3f5);
+  color: var(--mantine-color-text, #000);
+  border: 1px solid var(--mantine-color-default-border, #dee2e6);
+}
+
+.introjs-prevbutton:hover {
+  background-color: var(--mantine-color-gray-2, #e9ecef);
+}
+
+/* Next button */
+.introjs-nextbutton {
+  background-color: var(--mantine-color-blue-filled, #228be6);
+  color: white;
+}
+
+.introjs-nextbutton:hover {
+  background-color: var(--mantine-color-blue-7, #1c7ed6);
+}
+
+/* Done button */
+.introjs-donebutton {
+  background-color: var(--mantine-color-green-filled, #40c057);
+  color: white;
+}
+
+.introjs-donebutton:hover {
+  background-color: var(--mantine-color-green-7, #37b24d);
+}
+
+/* Disabled state */
+.introjs-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Hide bullets */
+.introjs-bullets {
+  display: none !important;
+}
+
+/* Hide step numbers */
+.introjs-helperNumberLayer {
+  display: none !important;
+}
+
+/* Highlight layer */
+.introjs-helperLayer {
+  border-radius: 8px;
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5);
+}
+
+/* Overlay */
+.introjs-overlay {
+  background-color: transparent !important;
+}
+
+/* Tooltip arrow */
+.introjs-arrow {
+  border: 10px solid transparent;
+}
+
+.introjs-arrow.top {
+  border-bottom-color: var(--mantine-color-body, #fff);
+  top: -20px;
+}
+
+.introjs-arrow.bottom {
+  border-top-color: var(--mantine-color-body, #fff);
+  bottom: -20px;
+}
+
+.introjs-arrow.left {
+  border-right-color: var(--mantine-color-body, #fff);
+}
+
+.introjs-arrow.right {
+  border-left-color: var(--mantine-color-body, #fff);
+}
+
+/* Fix z-index */
+.introjs-fixParent {
+  z-index: auto !important;
+}
+
+/* Dark mode support */
+[data-mantine-color-scheme="dark"] .introjs-tooltip {
+  background-color: var(--mantine-color-dark-6, #25262b);
+  border-color: var(--mantine-color-dark-4, #373a40);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-helperLayer {
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.7);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-prevbutton {
+  background-color: var(--mantine-color-dark-5, #2c2e33);
+  border-color: var(--mantine-color-dark-4, #373a40);
+  color: var(--mantine-color-text, #c1c2c5);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-prevbutton:hover {
+  background-color: var(--mantine-color-dark-4, #373a40);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-arrow.top {
+  border-bottom-color: var(--mantine-color-dark-6, #25262b);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-arrow.bottom {
+  border-top-color: var(--mantine-color-dark-6, #25262b);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-arrow.left {
+  border-right-color: var(--mantine-color-dark-6, #25262b);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-arrow.right {
+  border-left-color: var(--mantine-color-dark-6, #25262b);
+}
+
+[data-mantine-color-scheme="dark"] .wizard-progress {
+  border-top-color: var(--mantine-color-dark-4, #373a40);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-progress {
+  background-color: var(--mantine-color-dark-4, #373a40);
+}
+
+[data-mantine-color-scheme="dark"] .introjs-tooltipbuttons {
+  border-top-color: var(--mantine-color-dark-4, #373a40);
+}

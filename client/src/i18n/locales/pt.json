@@ -1,4 +1,111 @@
 {
+  "onboarding": {
+    "infoButton": "Tutorial",
+    "dontShowAgain": "Não mostrar novamente",
+    "stepOf": "Passo {{current}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "skip": "Pular",
+    "done": "Concluir",
+    "steps": {
+      "tabs": {
+        "title": "Abas de Navegação",
+        "description": "Use estas abas para alternar entre diferentes ferramentas. Cada aba tem funcionalidades especializadas para arbitragem de torneios."
+      },
+      "theme": {
+        "title": "Alternar Tema",
+        "description": "Alterne entre modo claro e escuro conforme sua preferência ou condições de iluminação."
+      },
+      "language": {
+        "title": "Seleção de Idioma",
+        "description": "Escolha seu idioma preferido. O aplicativo suporta Inglês, Português e Espanhol."
+      },
+      "draw": {
+        "title": "Checkbox de Compra",
+        "description": "Marque quando um jogador compra uma carta no início do turno. Toque em qualquer lugar neste cartão para alternar."
+      },
+      "actions": {
+        "title": "Botões de Ação",
+        "description": "Rastreie ações do jogo: Apoiador, Energia, Estádio, Recuar e Outras. Ações únicas por turno ficam verdes quando usadas. Toque no menos vermelho para desfazer."
+      },
+      "prizes": {
+        "title": "Contador de Prêmios",
+        "description": "Rastreie quantas cartas de prêmio foram pegas neste turno."
+      },
+      "timerDisplay": {
+        "title": "Timer e Ritmo",
+        "description": "Monitore a duração do turno e calcule o ritmo (segundos por ação)."
+      },
+      "timerControls": {
+        "title": "Controles do Timer",
+        "description": "Inicie e pare o timer do turno. O timer ajuda a rastrear o ritmo do jogador durante uma partida."
+      },
+      "nextTurn": {
+        "title": "Próximo Turno",
+        "description": "Finalize o turno atual e comece a rastrear o próximo jogador. Todos os contadores resetam automaticamente."
+      },
+      "turnHistory": {
+        "title": "Histórico de Turnos",
+        "description": "Veja um registro completo de todos os turnos, mostrando ações, tempo e ritmo de cada jogador."
+      },
+      "clearAll": {
+        "title": "Limpar Tudo",
+        "description": "Resete todos os dados incluindo o histórico de turnos. Um diálogo de confirmação aparecerá primeiro."
+      },
+      "autostart": {
+        "title": "Opções de Autostart",
+        "description": "Configure o início automático do timer ao marcar Compra ou pressionar Próximo Turno."
+      },
+      "counters": {
+        "title": "Contadores de Cartas",
+        "description": "Conte cartas por tipo: Pokémon, Treinador e Energia. Toque +1 até +4 para adicionar múltiplas cartas de uma vez."
+      },
+      "deckTotal": {
+        "title": "Contador Total",
+        "description": "Mostra a contagem total de cartas. Fica verde com exatamente 60 cartas, vermelho caso contrário."
+      },
+      "deckControls": {
+        "title": "Desfazer e Resetar",
+        "description": "Desfaça a última contagem ou resete todos os contadores para zero."
+      },
+      "lookupCard": {
+        "title": "Buscar Carta",
+        "description": "Abre o banco de dados oficial de cartas Pokémon para verificar informações."
+      },
+      "roundName": {
+        "title": "Nome da Rodada",
+        "description": "Digite o nome da rodada (ex: 'Rodada 1', 'Finais') para exibir no timer."
+      },
+      "roundTimerDisplay": {
+        "title": "Display do Timer",
+        "description": "Mostra o tempo restante. Verde quando mais de 1/3 restante, amarelo abaixo de 1/3, vermelho em tempo extra."
+      },
+      "presets": {
+        "title": "Presets Rápidos",
+        "description": "Defina tempos comuns: BO1 (30min), BO3 (50min), ou Top Cut (75min)."
+      },
+      "roundControls": {
+        "title": "Controles do Timer",
+        "description": "Inicie, pause ou resete o timer da rodada."
+      },
+      "startDisplay": {
+        "title": "Tela Cheia",
+        "description": "Abra o timer em uma nova janela em tela cheia para todos os jogadores verem."
+      },
+      "extensionForm": {
+        "title": "Adicionar Extensão",
+        "description": "Registre extensões de tempo inserindo o número da rodada, mesa e minutos concedidos."
+      },
+      "extensionTable": {
+        "title": "Lista de Extensões",
+        "description": "Veja todas as extensões registradas agrupadas por rodada. Edite ou exclua entradas conforme necessário."
+      },
+      "documents": {
+        "title": "Documentos Oficiais",
+        "description": "Acesso rápido às regras oficiais de torneio Pokémon TCG, diretrizes de penalidade e materiais de referência."
+      }
+    }
+  },
   "tabs": {
     "tableJudge": "Table Judge",
     "deckCheck": "Deck Check",

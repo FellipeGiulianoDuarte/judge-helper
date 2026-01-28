@@ -46,7 +46,7 @@ export function DocumentsPage() {
   const textColor = isDark ? theme.white : theme.colors.dark[7];
 
   return (
-    <Stack gap="sm" p="md">
+    <Stack gap="sm" p="md" data-wizard-documents>
       {documents.map((doc) => (
         <Paper
           key={doc.key}

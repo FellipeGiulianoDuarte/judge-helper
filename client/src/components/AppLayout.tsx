@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, Box, Select, Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { useOnboardingWizard } from './OnboardingWizard/OnboardingWizardContext';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -46,12 +47,31 @@ const IconMoon = () => (
   </svg>
 );
 
+const IconInfo = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" y1="16" x2="12" y2="12" />
+    <line x1="12" y1="8" x2="12.01" y2="8" />
+  </svg>
+);
+
 export function AppLayout({ children }: AppLayoutProps) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';
+  const { startWizard } = useOnboardingWizard();
 
   const currentTab = location.pathname === '/' ? '/table-judge' : location.pathname;
 
@@ -72,7 +92,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <Box maw={480} mx="auto" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Tabs value={currentTab} onChange={handleTabChange}>
-        <Tabs.List grow>
+        <Tabs.List grow data-wizard-tabs>
           <Tabs.Tab value="/table-judge">{t('tabs.tableJudge')}</Tabs.Tab>
           <Tabs.Tab value="/deck-check">{t('tabs.deckCheck')}</Tabs.Tab>
           <Tabs.Tab value="/round-timer">{t('tabs.roundTimer')}</Tabs.Tab>
@@ -85,8 +105,18 @@ export function AppLayout({ children }: AppLayoutProps) {
         <ActionIcon
           variant="default"
           size="lg"
+          aria-label={t('onboarding.infoButton')}
+          onClick={startWizard}
+          data-wizard-info
+        >
+          <IconInfo />
+        </ActionIcon>
+        <ActionIcon
+          variant="default"
+          size="lg"
           aria-label={t('theme.toggle')}
           onClick={() => toggleColorScheme()}
+          data-wizard-theme
         >
           {isDark ? <IconSun /> : <IconMoon />}
         </ActionIcon>
@@ -101,6 +131,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             { value: 'pt', label: 'PT' },
             { value: 'es', label: 'ES' },
           ]}
+          data-wizard-language
         />
       </Group>
 

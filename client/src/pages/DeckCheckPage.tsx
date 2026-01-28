@@ -78,6 +78,7 @@ export function DeckCheckPage() {
 
   return (
     <Stack gap="md" p="md">
+      <Box data-wizard-counters>
       {counterTypes.map((type) => (
         <Paper
           key={type}
@@ -116,11 +117,13 @@ export function DeckCheckPage() {
           </SimpleGrid>
         </Paper>
       ))}
+      </Box>
 
-      <Paper 
-        p="md" 
+      <Paper
+        p="md"
         withBorder
         data-testid="deck-total-card"
+        data-wizard-deck-total
         style={{
           backgroundColor: (() => {
             if (total === 60) {
@@ -170,7 +173,7 @@ export function DeckCheckPage() {
 
       <Box style={{ flexGrow: 1 }} />
 
-      <Group grow gap="sm">
+      <Group grow gap="sm" data-wizard-deck-controls>
         <Button variant="filled" color="blue" size="lg" onClick={handleUndo}>
           {t('deckCheck.undo')}
         </Button>
@@ -179,15 +182,16 @@ export function DeckCheckPage() {
         </Button>
       </Group>
 
-      <Button 
-        variant="outline" 
-        color="gray" 
-        size="lg" 
+      <Button
+        variant="outline"
+        color="gray"
+        size="lg"
         fullWidth
         component="a"
         href="https://www.pokemon.com/us/pokemon-tcg/pokemon-cards"
         target="_blank"
         rel="noopener noreferrer"
+        data-wizard-lookup-card
       >
         {t('deckCheck.lookupCard')}
       </Button>

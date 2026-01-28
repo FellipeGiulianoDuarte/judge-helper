@@ -1,4 +1,111 @@
 {
+  "onboarding": {
+    "infoButton": "Tutorial",
+    "dontShowAgain": "Don't show again",
+    "stepOf": "Step {{current}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next",
+    "skip": "Skip",
+    "done": "Done",
+    "steps": {
+      "tabs": {
+        "title": "Navigation Tabs",
+        "description": "Use these tabs to switch between different tools. Each tab has specialized functionality for tournament judging."
+      },
+      "theme": {
+        "title": "Theme Toggle",
+        "description": "Switch between light and dark mode to match your preference or lighting conditions."
+      },
+      "language": {
+        "title": "Language Selection",
+        "description": "Choose your preferred language. The app supports English, Portuguese, and Spanish."
+      },
+      "draw": {
+        "title": "Draw Checkbox",
+        "description": "Mark when a player draws a card at the start of their turn. Tap anywhere on this card to toggle."
+      },
+      "actions": {
+        "title": "Action Buttons",
+        "description": "Track game actions: Supporter, Energy, Stadium, Retreat, and Other. Once-per-turn actions turn green when used. Tap the red minus to undo."
+      },
+      "prizes": {
+        "title": "Prizes Counter",
+        "description": "Track how many prize cards have been taken this turn."
+      },
+      "timerDisplay": {
+        "title": "Timer & Pace",
+        "description": "Monitor turn duration and calculate the pace (seconds per action)."
+      },
+      "timerControls": {
+        "title": "Timer Controls",
+        "description": "Start and stop the turn timer. The timer helps track player pace during a match."
+      },
+      "nextTurn": {
+        "title": "Next Turn",
+        "description": "End the current turn and start tracking the next player. All counters reset automatically."
+      },
+      "turnHistory": {
+        "title": "Turn History",
+        "description": "View a complete record of all turns, showing actions, time, and pace for each player."
+      },
+      "clearAll": {
+        "title": "Clear All",
+        "description": "Reset all data including turn history. A confirmation dialog will appear first."
+      },
+      "autostart": {
+        "title": "Autostart Options",
+        "description": "Configure automatic timer start when checking Draw or pressing Next Turn."
+      },
+      "counters": {
+        "title": "Card Counters",
+        "description": "Count cards by type: Pokemon, Trainer, and Energy. Tap +1 through +4 to add multiple cards at once."
+      },
+      "deckTotal": {
+        "title": "Total Counter",
+        "description": "Shows the total card count. Turns green at exactly 60 cards, red otherwise."
+      },
+      "deckControls": {
+        "title": "Undo & Reset",
+        "description": "Undo the last count or reset all counters to zero."
+      },
+      "lookupCard": {
+        "title": "Card Lookup",
+        "description": "Opens the official Pokemon card database to verify card information."
+      },
+      "roundName": {
+        "title": "Round Name",
+        "description": "Enter the round name (e.g., 'Round 1', 'Finals') to display on the timer."
+      },
+      "roundTimerDisplay": {
+        "title": "Timer Display",
+        "description": "Shows remaining time. Green when more than 1/3 remaining, yellow under 1/3, red when overtime."
+      },
+      "presets": {
+        "title": "Quick Presets",
+        "description": "Set common round times: BO1 (30min), BO3 (50min), or Top Cut (75min)."
+      },
+      "roundControls": {
+        "title": "Timer Controls",
+        "description": "Start, pause, or reset the round timer."
+      },
+      "startDisplay": {
+        "title": "Full Screen Display",
+        "description": "Open the timer in a new full-screen window for all players to see."
+      },
+      "extensionForm": {
+        "title": "Add Extension",
+        "description": "Record time extensions by entering the round number, table, and minutes granted."
+      },
+      "extensionTable": {
+        "title": "Extensions List",
+        "description": "View all recorded extensions grouped by round. Edit or delete entries as needed."
+      },
+      "documents": {
+        "title": "Official Documents",
+        "description": "Quick access to official Pokemon TCG tournament rules, penalty guidelines, and reference materials."
+      }
+    }
+  },
   "tabs": {
     "tableJudge": "Table Judge",
     "deckCheck": "Deck Check",
