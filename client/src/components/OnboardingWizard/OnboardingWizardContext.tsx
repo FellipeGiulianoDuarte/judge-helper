@@ -137,6 +137,7 @@ export function OnboardingWizardProvider({ children }: OnboardingWizardProviderP
       if (stepConfig.targetTab !== locationRef.current && !isNavigatingRef.current) {
         isNavigatingRef.current = true;
         pendingStepRef.current = currentStep;
+        const targetTab = stepConfig.targetTab;
 
         // Exit intro and navigate
         setTimeout(() => {
@@ -145,7 +146,7 @@ export function OnboardingWizardProvider({ children }: OnboardingWizardProviderP
           } catch {
             // ignore
           }
-          navigateRef.current(stepConfig.targetTab);
+          navigateRef.current(targetTab);
         }, 50);
       }
     });
