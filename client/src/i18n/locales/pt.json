@@ -94,11 +94,7 @@
       },
       "categorySelector": {
         "title": "Seletor de Categoria",
-        "description": "Escolha a categoria do torneio: Junior, Senior ou Masters. Isso afeta as extensões de tempo recomendadas exibidas abaixo."
-      },
-      "recommendedExtensions": {
-        "title": "Extensões Recomendadas",
-        "description": "Esta tabela mostra extensões de tempo recomendadas com base na categoria selecionada. Use como referência ao conceder extensões."
+        "description": "Escolha a categoria do torneio: Junior, Senior ou Masters. Isso ajuda a organizar as extensões por categoria de jogador."
       },
       "extensionForm": {
         "title": "Adicionar Extensão",
@@ -209,14 +205,7 @@
     "category": "Categoria",
     "junior": "Junior",
     "senior": "Senior",
-    "masters": "Masters",
-    "recommendedTitle": "Extensões Recomendadas - {{category}}",
-    "procedure": "Procedimento",
-    "recommendedTime": "Tempo",
-    "deckSearch": "Busca no deck / embaralhar",
-    "prizeCheck": "Verificação de cartas de prêmio",
-    "judgeCall": "Resolução de chamada de juiz",
-    "otherProcedure": "Outro procedimento"
+    "masters": "Masters"
   },
   "credits": {
     "title": "Créditos",

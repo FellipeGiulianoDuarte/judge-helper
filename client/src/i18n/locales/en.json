@@ -94,11 +94,7 @@
       },
       "categorySelector": {
         "title": "Category Selector",
-        "description": "Choose the tournament category: Junior, Senior, or Masters. This affects the recommended time extensions shown below."
-      },
-      "recommendedExtensions": {
-        "title": "Recommended Extensions",
-        "description": "This table shows recommended time extensions based on the selected category. Use it as a reference when granting extensions."
+        "description": "Choose the tournament category: Junior, Senior, or Masters. This helps organize extensions by player category."
       },
       "extensionForm": {
         "title": "Add Extension",
@@ -209,14 +205,7 @@
     "category": "Category",
     "junior": "Junior",
     "senior": "Senior",
-    "masters": "Masters",
-    "recommendedTitle": "Recommended Extensions - {{category}}",
-    "procedure": "Procedure",
-    "recommendedTime": "Time",
-    "deckSearch": "Deck search / shuffle",
-    "prizeCheck": "Prize card check",
-    "judgeCall": "Judge call resolution",
-    "otherProcedure": "Other procedure"
+    "masters": "Masters"
   },
   "credits": {
     "title": "Credits",

@@ -38,19 +38,6 @@ interface TimeExtension {
   minutes: number;
 }
 
-interface RecommendedExtension {
-  procedureKey: string;
-  junior: string;
-  senior: string;
-  masters: string;
-}
-
-const RECOMMENDED_EXTENSIONS: RecommendedExtension[] = [
-  { procedureKey: 'deckSearch', junior: '3 min', senior: '2 min', masters: '1.5 min' },
-  { procedureKey: 'prizeCheck', junior: '2 min', senior: '1.5 min', masters: '1 min' },
-  { procedureKey: 'judgeCall', junior: '3 min', senior: '2 min', masters: '2 min' },
-  { procedureKey: 'otherProcedure', junior: '2 min', senior: '1.5 min', masters: '1 min' },
-];
 
 const CATEGORY_STORAGE_KEY = 'timeExtensionCategory';
 
@@ -157,8 +144,6 @@ export default function TimeExtensionsPage() {
     return a.localeCompare(b);
   });
 
-  const categoryLabel = t(`timeExtensions.${category}`);
-
   return (
     <Stack gap="lg" p="md">
       {/* Category Selector */}
@@ -178,31 +163,6 @@ export default function TimeExtensionsPage() {
             ]}
             fullWidth
           />
-        </Stack>
-      </Paper>
-
-      {/* Recommended Extensions per Category */}
-      <Paper shadow="xs" p="md" withBorder data-testid="recommended-extensions" data-wizard-recommended-extensions>
-        <Stack gap="sm">
-          <Text size="md" fw={600}>
-            {t('timeExtensions.recommendedTitle', { category: categoryLabel })}
-          </Text>
-          <Table>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>{t('timeExtensions.procedure')}</Table.Th>
-                <Table.Th w={100} style={{ textAlign: 'right' }}>{t('timeExtensions.recommendedTime')}</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {RECOMMENDED_EXTENSIONS.map((rec) => (
-                <Table.Tr key={rec.procedureKey}>
-                  <Table.Td>{t(`timeExtensions.${rec.procedureKey}`)}</Table.Td>
-                  <Table.Td style={{ textAlign: 'right' }}>{rec[category]}</Table.Td>
-                </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
         </Stack>
       </Paper>
 
