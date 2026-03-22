@@ -92,6 +92,10 @@
         "title": "Tela Cheia",
         "description": "Abra o timer em uma nova janela em tela cheia para todos os jogadores verem."
       },
+      "categorySelector": {
+        "title": "Seletor de Categoria",
+        "description": "Escolha a categoria do torneio: Junior, Senior ou Masters. Isso ajuda a organizar as extensões por categoria de jogador."
+      },
       "extensionForm": {
         "title": "Adicionar Extensão",
         "description": "Registre extensões de tempo inserindo o número da rodada, mesa e minutos concedidos."
@@ -197,7 +201,11 @@
     "delete": "Excluir",
     "save": "Salvar",
     "cancel": "Cancelar",
-    "noExtensions": "Nenhuma extensão registrada"
+    "noExtensions": "Nenhuma extensão registrada",
+    "category": "Categoria",
+    "junior": "Junior",
+    "senior": "Senior",
+    "masters": "Masters"
   },
   "credits": {
     "title": "Créditos",
