@@ -4,7 +4,10 @@ test.describe('Table Judge - Turn History with Time and Pace', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.click('text=Table Judge');
-    await page.evaluate(() => localStorage.clear());
+    await page.evaluate(() => {
+      localStorage.clear();
+      localStorage.setItem('onboardingCompleted', 'true');
+    });
     await page.reload();
   });
 

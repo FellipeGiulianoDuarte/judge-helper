@@ -2,7 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Table Judge Page', () => {
   test.beforeEach(async ({ page }) => {
+    // Mark onboarding as completed to prevent wizard from blocking interactions
     await page.goto('/table-judge');
+    await page.evaluate(() => {
+      localStorage.setItem('onboardingCompleted', 'true');
+    });
+    await page.reload();
   });
 
   test('should display all action buttons with initial count 0', async ({ page }) => {
