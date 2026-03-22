@@ -160,6 +160,7 @@ export function OnboardingWizardProvider({ children }: OnboardingWizardProviderP
     intro.onexit(() => {
       // Only mark as inactive if we're not navigating to a new tab
       if (!isNavigatingRef.current) {
+        markCompleted();
         setIsWizardActive(false);
       }
       introRef.current = null;
@@ -219,16 +220,32 @@ export function OnboardingWizardProvider({ children }: OnboardingWizardProviderP
     }
   }, [location.pathname, isWizardActive, startIntroAtStep]);
 
-  // Auto-start on first visit
+  // Keep a ref to startWizard so the auto-start effect doesn't re-run when it changes
+  const startWizardRef = useRef(startWizard);
+  useEffect(() => {
+    startWizardRef.current = startWizard;
+  }, [startWizard]);
+
+  // Auto-start on first visit (only on the default landing tab)
   useEffect(() => {
     if (!hasAutoStarted.current && !isCompleted()) {
-      hasAutoStarted.current = true;
       const timer = setTimeout(() => {
-        startWizard();
+        if (!hasAutoStarted.current) {
+          hasAutoStarted.current = true;
+          const firstStepTab = wizardSteps[0]?.targetTab;
+          // Only auto-start if the user is on the wizard's first step tab.
+          // If they navigated directly to another tab (e.g., opened a link to /round-timer),
+          // don't redirect them - just mark onboarding as completed to prevent future redirects.
+          if (firstStepTab && locationRef.current !== firstStepTab) {
+            markCompleted();
+            return;
+          }
+          startWizardRef.current();
+        }
       }, 800);
       return () => clearTimeout(timer);
     }
-  }, [isCompleted, startWizard]);
+  }, [isCompleted, markCompleted]);
 
   return (
     <OnboardingWizardContext.Provider value={{ startWizard, isWizardActive }}>
