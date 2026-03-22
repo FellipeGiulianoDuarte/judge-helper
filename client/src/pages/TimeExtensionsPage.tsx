@@ -162,7 +162,7 @@ export default function TimeExtensionsPage() {
   return (
     <Stack gap="lg" p="md">
       {/* Category Selector */}
-      <Paper shadow="xs" p="md" withBorder>
+      <Paper shadow="xs" p="md" withBorder data-wizard-category-selector>
         <Stack gap="sm">
           <Text size="sm" fw={600}>
             {t('timeExtensions.category')}
@@ -182,7 +182,7 @@ export default function TimeExtensionsPage() {
       </Paper>
 
       {/* Recommended Extensions per Category */}
-      <Paper shadow="xs" p="md" withBorder data-testid="recommended-extensions">
+      <Paper shadow="xs" p="md" withBorder data-testid="recommended-extensions" data-wizard-recommended-extensions>
         <Stack gap="sm">
           <Text size="md" fw={600}>
             {t('timeExtensions.recommendedTitle', { category: categoryLabel })}

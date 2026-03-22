@@ -155,7 +155,21 @@ export const wizardSteps: WizardStep[] = [
     position: 'top',
   },
 
-  // === TIME EXTENSIONS - 2 steps ===
+  // === TIME EXTENSIONS - 4 steps ===
+  {
+    element: '[data-wizard-category-selector]',
+    titleKey: 'onboarding.steps.categorySelector.title',
+    descriptionKey: 'onboarding.steps.categorySelector.description',
+    targetTab: '/time-extensions',
+    position: 'bottom',
+  },
+  {
+    element: '[data-wizard-recommended-extensions]',
+    titleKey: 'onboarding.steps.recommendedExtensions.title',
+    descriptionKey: 'onboarding.steps.recommendedExtensions.description',
+    targetTab: '/time-extensions',
+    position: 'bottom',
+  },
   {
     element: '[data-wizard-extension-form]',
     titleKey: 'onboarding.steps.extensionForm.title',

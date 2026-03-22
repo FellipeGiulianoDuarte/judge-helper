@@ -92,6 +92,14 @@
         "title": "Tela Cheia",
         "description": "Abra o timer em uma nova janela em tela cheia para todos os jogadores verem."
       },
+      "categorySelector": {
+        "title": "Seletor de Categoria",
+        "description": "Escolha a categoria do torneio: Junior, Senior ou Masters. Isso afeta as extensões de tempo recomendadas exibidas abaixo."
+      },
+      "recommendedExtensions": {
+        "title": "Extensões Recomendadas",
+        "description": "Esta tabela mostra extensões de tempo recomendadas com base na categoria selecionada. Use como referência ao conceder extensões."
+      },
       "extensionForm": {
         "title": "Adicionar Extensão",
         "description": "Registre extensões de tempo inserindo o número da rodada, mesa e minutos concedidos."

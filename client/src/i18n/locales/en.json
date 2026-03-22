@@ -92,6 +92,14 @@
         "title": "Full Screen Display",
         "description": "Open the timer in a new full-screen window for all players to see."
       },
+      "categorySelector": {
+        "title": "Category Selector",
+        "description": "Choose the tournament category: Junior, Senior, or Masters. This affects the recommended time extensions shown below."
+      },
+      "recommendedExtensions": {
+        "title": "Recommended Extensions",
+        "description": "This table shows recommended time extensions based on the selected category. Use it as a reference when granting extensions."
+      },
       "extensionForm": {
         "title": "Add Extension",
         "description": "Record time extensions by entering the round number, table, and minutes granted."
