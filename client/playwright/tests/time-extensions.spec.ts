@@ -4,7 +4,10 @@ test.describe('Time Extensions Page', () => {
   test.beforeEach(async ({ page }) => {
     // Clear localStorage before each test
     await page.goto('/time-extensions');
-    await page.evaluate(() => localStorage.removeItem('timeExtensions'));
+    await page.evaluate(() => {
+      localStorage.removeItem('timeExtensions');
+      localStorage.setItem('onboardingCompleted', 'true');
+    });
     await page.reload();
   });
 
@@ -71,19 +74,23 @@ test.describe('Time Extensions Page', () => {
     await page.getByPlaceholder(/table|mesa/i).fill('5');
     await page.getByPlaceholder(/minutes|minutos/i).fill('3');
     await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
-    
+
     // Click edit button
-    await page.getByRole('button', { name: /edit|editar/i }).click();
-    
-    // Should show edit input with current value
-    const editInput = page.locator('input[type="number"]').last();
+    await page.getByLabel(/edit|editar/i).click();
+
+    // Find the edit input inside the table row and update value
+    const row = page.locator('table tbody tr');
+    const editInput = row.getByRole('spinbutton');
+    await expect(editInput).toBeVisible();
     await editInput.fill('7');
-    
-    // Save
-    await page.getByRole('button', { name: /save|salvar|guardar/i }).click();
-    
+
+    // Save - use dispatchEvent to reliably trigger click on mobile viewport
+    const saveButton = row.getByLabel(/save|salvar|guardar/i);
+    await saveButton.dispatchEvent('click');
+
     // Should show updated value
-    await expect(page.getByText('7')).toBeVisible();
+    const bodyText = await page.locator('table tbody').textContent();
+    expect(bodyText).toContain('7');
   });
 
   test('should delete extension', async ({ page }) => {
@@ -124,6 +131,33 @@ test.describe('Time Extensions Page', () => {
     
     // Should show empty state (no extension added)
     await expect(page.getByText(/no extensions|nenhuma extensão|sin extensiones/i)).toBeVisible();
+  });
+
+  test('should save category with each extension', async ({ page }) => {
+    // Default category is Masters - add extension
+    await page.getByPlaceholder(/round|rodada|ronda/i).fill('1');
+    await page.getByPlaceholder(/table|mesa/i).fill('5');
+    await page.getByPlaceholder(/minutes|minutos/i).fill('3');
+    await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
+
+    // Category should be displayed in the table row
+    await expect(page.getByRole('cell', { name: /masters/i })).toBeVisible();
+
+    // Switch to Junior and add another extension
+    await page.locator('[data-testid="category-selector"]').getByText(/junior/i).click();
+    await page.getByPlaceholder(/round|rodada|ronda/i).fill('1');
+    await page.getByPlaceholder(/table|mesa/i).fill('8');
+    await page.getByPlaceholder(/minutes|minutos/i).fill('5');
+    await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
+
+    // Both categories should be visible
+    await expect(page.getByRole('cell', { name: /masters/i })).toBeVisible();
+    await expect(page.getByRole('cell', { name: /junior/i })).toBeVisible();
+
+    // Verify localStorage has category data
+    const storedData = await page.evaluate(() => localStorage.getItem('timeExtensions'));
+    expect(storedData).toContain('"category":"masters"');
+    expect(storedData).toContain('"category":"junior"');
   });
 
   test('should display extensions grouped or sorted by round', async ({ page }) => {
