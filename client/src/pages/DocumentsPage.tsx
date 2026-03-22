@@ -7,38 +7,48 @@ interface Document {
 }
 
 const documents: Document[] = [
-  { 
-    key: 'tournamentRules', 
-    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tournament-rules-handbook-en.pdf' 
+  {
+    key: 'tournamentRules',
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tournament-rules-handbook-en.pdf'
   },
-  { 
-    key: 'penaltyGuidelines', 
-    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-penalty-guidelines-en.pdf' 
+  {
+    key: 'penaltyGuidelines',
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-penalty-guidelines-en.pdf'
   },
-  { 
-    key: 'rulebook', 
-    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/trading-card-game/rulebook/pfl_rulebook_en.pdf' 
+  {
+    key: 'rulebook',
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/trading-card-game/rulebook/pfl_rulebook_en.pdf'
   },
-  { 
-    key: 'bannedCards', 
-    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-banned-card-list' 
+  {
+    key: 'bannedCards',
+    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-banned-card-list'
   },
-  { 
-    key: 'tcgTournamentHandbook', 
-    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tcg-tournament-handbook-en.pdf' 
+  {
+    key: 'tcgTournamentHandbook',
+    url: 'https://www.pokemon.com/static-assets/content-assets/cms2/pdf/play-pokemon/rules/play-pokemon-tcg-tournament-handbook-en.pdf'
   },
-  { 
-    key: 'promoLegality', 
-    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-promo-card-legality-status' 
+  {
+    key: 'promoLegality',
+    url: 'https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-promo-card-legality-status'
   },
-  { 
-    key: 'attackSteps', 
-    url: 'https://www.judgeball.com/guidebook/tcg/attack-steps/' 
+  {
+    key: 'attackSteps',
+    url: 'https://www.judgeball.com/guidebook/tcg/attack-steps/'
   },
 ];
 
+function getLocalizedUrl(url: string, language: string): string {
+  if (language === 'pt') {
+    return url
+      .replace('/cms2/', '/cms2-pt-br/')
+      .replace(/_en\.pdf$/, '_br.pdf')
+      .replace(/-en\.pdf$/, '-br.pdf');
+  }
+  return url;
+}
+
 export function DocumentsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useMantineTheme();
   const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
   const isDark = colorScheme === 'dark';
@@ -52,7 +62,7 @@ export function DocumentsPage() {
           key={doc.key}
           data-testid="document-card"
           component="a"
-          href={doc.url}
+          href={getLocalizedUrl(doc.url, i18n.language)}
           target="_blank"
           rel="noopener noreferrer"
           p="md"
