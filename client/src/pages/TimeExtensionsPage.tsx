@@ -36,6 +36,7 @@ interface TimeExtension {
   round: string;
   table: string;
   minutes: number;
+  category?: Category;
 }
 
 
@@ -95,6 +96,7 @@ export default function TimeExtensionsPage() {
       round: round.trim(),
       table: table.trim(),
       minutes: parseInt(minutes, 10),
+      category,
     };
 
     setExtensions(prev => [...prev, newExtension]);
@@ -218,14 +220,16 @@ export default function TimeExtensionsPage() {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>{t('timeExtensions.table')}</Table.Th>
-                  <Table.Th w={100}>{t('timeExtensions.minutes')}</Table.Th>
-                  <Table.Th w={100} style={{ textAlign: 'right' }}>{t('timeExtensions.actions')}</Table.Th>
+                  <Table.Th>{t('timeExtensions.category')}</Table.Th>
+                  <Table.Th w={60}>{t('timeExtensions.minutes')}</Table.Th>
+                  <Table.Th w={80} style={{ textAlign: 'right' }}>{t('timeExtensions.actions')}</Table.Th>
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
                 {groupedExtensions[roundKey].map(ext => (
                   <Table.Tr key={ext.id}>
                     <Table.Td>{ext.table}</Table.Td>
+                    <Table.Td>{ext.category ? t(`timeExtensions.${ext.category}`) : '—'}</Table.Td>
                     <Table.Td>
                       {editingId === ext.id ? (
                         <TextInput
