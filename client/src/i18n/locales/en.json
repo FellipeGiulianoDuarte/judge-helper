@@ -92,6 +92,10 @@
         "title": "Full Screen Display",
         "description": "Open the timer in a new full-screen window for all players to see."
       },
+      "categorySelector": {
+        "title": "Category Selector",
+        "description": "Choose the tournament category: Junior, Senior, or Masters. This helps organize extensions by player category."
+      },
       "extensionForm": {
         "title": "Add Extension",
         "description": "Record time extensions by entering the round number, table, and minutes granted."
@@ -197,7 +201,11 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "noExtensions": "No extensions registered"
+    "noExtensions": "No extensions registered",
+    "category": "Category",
+    "junior": "Junior",
+    "senior": "Senior",
+    "masters": "Masters"
   },
   "credits": {
     "title": "Credits",
