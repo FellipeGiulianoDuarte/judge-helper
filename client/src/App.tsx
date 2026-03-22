@@ -9,6 +9,7 @@ import { TableJudgePage } from './pages/TableJudgePage';
 import RoundTimerPage from './pages/RoundTimerPage';
 import RoundTimerDisplayPage from './pages/RoundTimerDisplayPage';
 import TimeExtensionsPage from './pages/TimeExtensionsPage';
+import PenaltiesPage from './pages/PenaltiesPage';
 import { OnboardingWizardProvider } from './components/OnboardingWizard/OnboardingWizardContext';
 
 const colorSchemeManager = localStorageColorSchemeManager({ key: 'color-scheme' });
@@ -31,6 +32,7 @@ function App() {
             <Route path="/docs" element={<AppLayout><DocumentsPage /></AppLayout>} />
             <Route path="/round-timer" element={<AppLayout><RoundTimerPage /></AppLayout>} />
             <Route path="/time-extensions" element={<AppLayout><TimeExtensionsPage /></AppLayout>} />
+            <Route path="/penalties" element={<AppLayout><PenaltiesPage /></AppLayout>} />
           </Routes>
         </OnboardingWizardProvider>
       </BrowserRouter>

@@ -103,6 +103,18 @@
       "documents": {
         "title": "Documentos Oficiais",
         "description": "Acesso rápido às regras oficiais de torneio Pokémon TCG, diretrizes de penalidade e materiais de referência."
+      },
+      "penaltyForm": {
+        "title": "Formulário de Penalidade",
+        "description": "Registre penalidades inserindo o nome do jogador, número da rodada, selecionando a categoria de infração e a penalidade aplicada."
+      },
+      "penaltyInfractions": {
+        "title": "Categorias de Infração",
+        "description": "Selecione entre as categorias oficiais de infração do Play! Pokémon. O campo de penalidade aplicada é preenchido automaticamente com a penalidade padrão para aquela infração."
+      },
+      "penaltyHistory": {
+        "title": "Histórico de Penalidades",
+        "description": "Veja todas as penalidades registradas agrupadas por jogador. Pesquise por nome do jogador, exclua entradas individuais ou limpe todos os registros."
       }
     }
   },
@@ -111,7 +123,8 @@
     "deckCheck": "Deck Check",
     "documents": "Documentos",
     "roundTimer": "Timer de Rodada",
-    "timeExtensions": "Extensões"
+    "timeExtensions": "Extensões",
+    "penalties": "Penalidades"
   },
   "documents": {
     "title": "Documentos Oficiais",
@@ -198,6 +211,30 @@
     "save": "Salvar",
     "cancel": "Cancelar",
     "noExtensions": "Nenhuma extensão registrada"
+  },
+  "penalties": {
+    "title": "Penalidades",
+    "playerNamePlaceholder": "Nome do jogador",
+    "roundPlaceholder": "Rodada",
+    "infractionLabel": "Infração",
+    "infractionPlaceholder": "Selecione a infração...",
+    "penaltyAppliedLabel": "Penalidade Aplicada",
+    "penaltyAppliedPlaceholder": "Selecione a penalidade...",
+    "notesPlaceholder": "Notas (opcional)",
+    "add": "ADICIONAR",
+    "searchPlaceholder": "Pesquisar por nome do jogador...",
+    "clearAll": "LIMPAR TUDO",
+    "noPenalties": "Nenhuma penalidade registrada",
+    "round": "Rodada",
+    "infraction": "Infração",
+    "penaltyApplied": "Penalidade",
+    "notes": "Notas",
+    "actions": "Ações",
+    "delete": "Excluir",
+    "confirmClearTitle": "Confirmar Limpeza",
+    "confirmClearMessage": "Tem certeza que deseja limpar todos os registros de penalidade?",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   },
   "credits": {
     "title": "Créditos",
