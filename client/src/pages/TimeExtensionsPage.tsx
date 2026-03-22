@@ -74,9 +74,11 @@ export default function TimeExtensionsPage() {
     }
   }, [extensions]);
 
-  // Save category to localStorage
+  // Save category to localStorage (skip initial mount)
   useEffect(() => {
-    localStorage.setItem(CATEGORY_STORAGE_KEY, category);
+    if (!isInitialMount.current) {
+      localStorage.setItem(CATEGORY_STORAGE_KEY, category);
+    }
   }, [category]);
 
   const handleCategoryChange = (value: string) => {
