@@ -111,7 +111,8 @@
     "deckCheck": "Deck Check",
     "documents": "Documentos",
     "roundTimer": "Timer de Ronda",
-    "timeExtensions": "Extensiones"
+    "timeExtensions": "Extensiones",
+    "penalties": "Sanciones"
   },
   "documents": {
     "title": "Documentos Oficiales",
@@ -198,6 +199,23 @@
     "save": "Guardar",
     "cancel": "Cancelar",
     "noExtensions": "Sin extensiones registradas"
+  },
+  "penalties": {
+    "title": "Sanciones",
+    "playerTablePlaceholder": "Jugador / Mesa",
+    "penaltyType": "Tipo de Sanción",
+    "notesPlaceholder": "Notas",
+    "add": "AGREGAR",
+    "clearAll": "LIMPIAR TODO",
+    "delete": "Eliminar",
+    "noPenalties": "Sin sanciones registradas",
+    "types": {
+      "caution": "Precaución",
+      "warning": "Advertencia",
+      "prizeCard": "Carta de Premio",
+      "gameLoss": "Pérdida de Juego",
+      "disqualification": "Descalificación"
+    }
   },
   "credits": {
     "title": "Créditos",

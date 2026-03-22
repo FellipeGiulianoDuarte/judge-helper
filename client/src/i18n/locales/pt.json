@@ -111,7 +111,8 @@
     "deckCheck": "Deck Check",
     "documents": "Documentos",
     "roundTimer": "Timer de Rodada",
-    "timeExtensions": "Extensões"
+    "timeExtensions": "Extensões",
+    "penalties": "Penalidades"
   },
   "documents": {
     "title": "Documentos Oficiais",
@@ -198,6 +199,23 @@
     "save": "Salvar",
     "cancel": "Cancelar",
     "noExtensions": "Nenhuma extensão registrada"
+  },
+  "penalties": {
+    "title": "Penalidades",
+    "playerTablePlaceholder": "Jogador / Mesa",
+    "penaltyType": "Tipo de Penalidade",
+    "notesPlaceholder": "Observações",
+    "add": "ADICIONAR",
+    "clearAll": "LIMPAR TUDO",
+    "delete": "Excluir",
+    "noPenalties": "Nenhuma penalidade registrada",
+    "types": {
+      "caution": "Cuidado",
+      "warning": "Advertência",
+      "prizeCard": "Carta de Prêmio",
+      "gameLoss": "Derrota",
+      "disqualification": "Desclassificação"
+    }
   },
   "credits": {
     "title": "Créditos",
