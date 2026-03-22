@@ -107,6 +107,18 @@
       "documents": {
         "title": "Official Documents",
         "description": "Quick access to official Pokemon TCG tournament rules, penalty guidelines, and reference materials."
+      },
+      "penaltyForm": {
+        "title": "Penalty Form",
+        "description": "Register penalties by entering the player name, round number, selecting the infraction category, and the penalty applied."
+      },
+      "penaltyInfractions": {
+        "title": "Infraction Categories",
+        "description": "Select from official Play! Pokemon infraction categories. The penalty applied field auto-fills with the default penalty for that infraction."
+      },
+      "penaltyHistory": {
+        "title": "Penalty History",
+        "description": "View all registered penalties grouped by player. Search by player name, delete individual entries, or clear all records."
       }
     }
   },
@@ -115,7 +127,8 @@
     "deckCheck": "Deck Check",
     "documents": "Documents",
     "roundTimer": "Round Timer",
-    "timeExtensions": "Extensions"
+    "timeExtensions": "Extensions",
+    "penalties": "Penalties"
   },
   "documents": {
     "title": "Official Documents",
@@ -206,6 +219,30 @@
     "junior": "Junior",
     "senior": "Senior",
     "masters": "Masters"
+  },
+  "penalties": {
+    "title": "Penalties",
+    "playerNamePlaceholder": "Player name",
+    "roundPlaceholder": "Round",
+    "infractionLabel": "Infraction",
+    "infractionPlaceholder": "Select infraction...",
+    "penaltyAppliedLabel": "Penalty Applied",
+    "penaltyAppliedPlaceholder": "Select penalty...",
+    "notesPlaceholder": "Notes (optional)",
+    "add": "ADD",
+    "searchPlaceholder": "Search by player name...",
+    "clearAll": "CLEAR ALL",
+    "noPenalties": "No penalties registered",
+    "round": "Round",
+    "infraction": "Infraction",
+    "penaltyApplied": "Penalty",
+    "notes": "Notes",
+    "actions": "Actions",
+    "delete": "Delete",
+    "confirmClearTitle": "Confirm Clear All",
+    "confirmClearMessage": "Are you sure you want to clear all penalty records?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "credits": {
     "title": "Credits",

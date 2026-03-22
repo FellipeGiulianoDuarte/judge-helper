@@ -92,12 +92,13 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <Box maw={480} mx="auto" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Tabs value={currentTab} onChange={handleTabChange}>
-        <Tabs.List grow data-wizard-tabs>
-          <Tabs.Tab value="/table-judge">{t('tabs.tableJudge')}</Tabs.Tab>
-          <Tabs.Tab value="/deck-check">{t('tabs.deckCheck')}</Tabs.Tab>
-          <Tabs.Tab value="/round-timer">{t('tabs.roundTimer')}</Tabs.Tab>
-          <Tabs.Tab value="/time-extensions">{t('tabs.timeExtensions')}</Tabs.Tab>
-          <Tabs.Tab value="/docs">{t('tabs.documents')}</Tabs.Tab>
+        <Tabs.List grow data-wizard-tabs style={{ flexWrap: 'wrap' }}>
+          <Tabs.Tab value="/table-judge" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.tableJudge')}</Tabs.Tab>
+          <Tabs.Tab value="/deck-check" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.deckCheck')}</Tabs.Tab>
+          <Tabs.Tab value="/round-timer" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.roundTimer')}</Tabs.Tab>
+          <Tabs.Tab value="/time-extensions" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.timeExtensions')}</Tabs.Tab>
+          <Tabs.Tab value="/penalties" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.penalties')}</Tabs.Tab>
+          <Tabs.Tab value="/docs" style={{ flex: '1 1 33.33%', maxWidth: '33.33%' }}>{t('tabs.documents')}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
 
