@@ -197,7 +197,18 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "noExtensions": "No extensions registered"
+    "noExtensions": "No extensions registered",
+    "category": "Category",
+    "junior": "Junior",
+    "senior": "Senior",
+    "masters": "Masters",
+    "recommendedTitle": "Recommended Extensions - {{category}}",
+    "procedure": "Procedure",
+    "recommendedTime": "Time",
+    "deckSearch": "Deck search / shuffle",
+    "prizeCheck": "Prize card check",
+    "judgeCall": "Judge call resolution",
+    "otherProcedure": "Other procedure"
   },
   "credits": {
     "title": "Credits",

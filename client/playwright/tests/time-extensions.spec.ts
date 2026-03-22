@@ -29,10 +29,10 @@ test.describe('Time Extensions Page', () => {
     
     await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
     
-    // Should display the new extension in the list
-    await expect(page.getByText('1')).toBeVisible(); // Round
-    await expect(page.getByText('5')).toBeVisible(); // Table
-    await expect(page.getByText('3')).toBeVisible(); // Minutes
+    // Should display the new extension in the list (use exact match to avoid matching recommended table)
+    await expect(page.getByText('Round 1')).toBeVisible(); // Round header
+    await expect(page.getByRole('cell', { name: '5', exact: true })).toBeVisible(); // Table
+    await expect(page.getByRole('cell', { name: '3', exact: true })).toBeVisible(); // Minutes
   });
 
   test('should clear inputs after adding', async ({ page }) => {
@@ -93,8 +93,8 @@ test.describe('Time Extensions Page', () => {
     await page.getByPlaceholder(/minutes|minutos/i).fill('3');
     await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
     
-    // Verify it's visible
-    await expect(page.getByText('5')).toBeVisible();
+    // Verify it's visible (use exact match to avoid matching recommended table)
+    await expect(page.getByRole('cell', { name: '5', exact: true })).toBeVisible();
     
     // Delete
     await page.getByRole('button', { name: /delete|excluir|eliminar/i }).click();
@@ -110,8 +110,8 @@ test.describe('Time Extensions Page', () => {
     await page.getByPlaceholder(/minutes|minutos/i).fill('3');
     await page.getByRole('button', { name: /add|adicionar|agregar/i }).click();
     
-    // Wait and verify the item was added
-    await expect(page.getByRole('cell', { name: '5' })).toBeVisible();
+    // Wait and verify the item was added (use exact match to avoid matching recommended table)
+    await expect(page.getByRole('cell', { name: '5', exact: true })).toBeVisible();
     
     // Verify localStorage has data
     const storedData = await page.evaluate(() => localStorage.getItem('timeExtensions'));

@@ -197,7 +197,18 @@
     "delete": "Excluir",
     "save": "Salvar",
     "cancel": "Cancelar",
-    "noExtensions": "Nenhuma extensão registrada"
+    "noExtensions": "Nenhuma extensão registrada",
+    "category": "Categoria",
+    "junior": "Junior",
+    "senior": "Senior",
+    "masters": "Masters",
+    "recommendedTitle": "Extensões Recomendadas - {{category}}",
+    "procedure": "Procedimento",
+    "recommendedTime": "Tempo",
+    "deckSearch": "Busca no deck / embaralhar",
+    "prizeCheck": "Verificação de cartas de prêmio",
+    "judgeCall": "Resolução de chamada de juiz",
+    "otherProcedure": "Outro procedimento"
   },
   "credits": {
     "title": "Créditos",
