@@ -66,8 +66,23 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ## Development Workflow
 
-1. Create a branch from `main`:
+### Branch Strategy
+
+This project uses a **staging-first** deployment strategy:
+
+```
+feature/fix branches → PR → staging → PR → main (production)
+```
+
+- **`main`** — Production branch. Deployed to the live Vercel site. Only receives merges from `staging`.
+- **`staging`** — Pre-production branch. All feature/fix PRs target this branch first. Has its own Vercel preview deployment for testing.
+
+### Steps
+
+1. Create a branch from `staging`:
    ```bash
+   git checkout staging
+   git pull origin staging
    git checkout -b feature/my-feature
    # or
    git checkout -b fix/bug-description
@@ -86,7 +101,7 @@ Open [http://localhost:5173](http://localhost:5173)
    git commit -m "feat: add card lookup feature to deck check"
    ```
 
-5. Push and open a Pull Request against `main`
+5. Push and open a Pull Request against **`staging`** (not `main`)
 
 ### Branch Naming
 
@@ -164,11 +179,12 @@ bun exec playwright test --ui
 
 ## Submitting a Pull Request
 
-1. Make sure your branch is up to date with `main`
+1. Make sure your branch is up to date with `staging`
 2. Fill out the PR template completely
 3. Ensure all E2E tests pass
 4. Link the related issue (if any)
-5. Wait for maintainer review
+5. Target `staging` as the base branch (PRs to `main` will be rejected)
+6. Wait for maintainer review
 
 ### PR Checklist
 
