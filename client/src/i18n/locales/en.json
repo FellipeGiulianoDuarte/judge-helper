@@ -134,6 +134,7 @@
     "title": "Official Documents",
     "tournamentRules": "Tournament Rules Handbook",
     "penaltyGuidelines": "Penalty Guidelines",
+    "penaltyDisclaimer": "Penalty suggestions follow the official rulebook recommendations but may be escalated or de-escalated based on context and investigation.",
     "rulebook": "TCG Rulebook (PDF)",
     "bannedCards": "TCG Banned Card List",
     "tcgTournamentHandbook": "TCG Tournament Handbook",
@@ -242,7 +243,9 @@
     "confirmClearTitle": "Confirm Clear All",
     "confirmClearMessage": "Are you sure you want to clear all penalty records?",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "exportCsv": "Export CSV",
+    "player": "Player"
   },
   "credits": {
     "title": "Credits",
