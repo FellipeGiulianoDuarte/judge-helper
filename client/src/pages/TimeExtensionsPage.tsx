@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Stack, Paper, TextInput, Button, Group, Text, Table, ActionIcon } from '@mantine/core';
+import { Stack, Paper, TextInput, Button, Group, Text, Table, ActionIcon, SegmentedControl } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 
 // Simple SVG icons
@@ -29,12 +29,18 @@ const IconTrash = () => (
   </svg>
 );
 
+type Category = 'junior' | 'senior' | 'masters';
+
 interface TimeExtension {
   id: string;
   round: string;
   table: string;
   minutes: number;
+  category?: Category;
 }
+
+
+const CATEGORY_STORAGE_KEY = 'timeExtensionCategory';
 
 export default function TimeExtensionsPage() {
   const { t } = useTranslation();
@@ -44,6 +50,13 @@ export default function TimeExtensionsPage() {
   const [minutes, setMinutes] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editMinutes, setEditMinutes] = useState('');
+  const [category, setCategory] = useState<Category>(() => {
+    const saved = localStorage.getItem(CATEGORY_STORAGE_KEY);
+    if (saved === 'junior' || saved === 'senior' || saved === 'masters') {
+      return saved;
+    }
+    return 'masters';
+  });
   const isInitialMount = useRef(true);
 
   // Load from localStorage
@@ -62,6 +75,17 @@ export default function TimeExtensionsPage() {
     }
   }, [extensions]);
 
+  // Save category to localStorage (skip initial mount)
+  useEffect(() => {
+    if (!isInitialMount.current) {
+      localStorage.setItem(CATEGORY_STORAGE_KEY, category);
+    }
+  }, [category]);
+
+  const handleCategoryChange = (value: string) => {
+    setCategory(value as Category);
+  };
+
   const handleAdd = () => {
     if (!round.trim() || !table.trim() || !minutes.trim()) {
       return;
@@ -72,6 +96,7 @@ export default function TimeExtensionsPage() {
       round: round.trim(),
       table: table.trim(),
       minutes: parseInt(minutes, 10),
+      category,
     };
 
     setExtensions(prev => [...prev, newExtension]);
@@ -125,6 +150,27 @@ export default function TimeExtensionsPage() {
 
   return (
     <Stack gap="lg" p="md">
+      {/* Category Selector */}
+      <Paper shadow="xs" p="md" withBorder data-wizard-category-selector>
+        <Stack gap="sm">
+          <Text size="sm" fw={600}>
+            {t('timeExtensions.category')}
+          </Text>
+          <SegmentedControl
+            data-testid="category-selector"
+            value={category}
+            onChange={handleCategoryChange}
+            data={[
+              { label: t('timeExtensions.junior'), value: 'junior' },
+              { label: t('timeExtensions.senior'), value: 'senior' },
+              { label: t('timeExtensions.masters'), value: 'masters' },
+            ]}
+            fullWidth
+          />
+        </Stack>
+      </Paper>
+
+      {/* Extension Form */}
       <Paper shadow="xs" p="md" withBorder data-wizard-extension-form>
         <Stack gap="md">
           <Text size="lg" fw={600}>
@@ -169,19 +215,21 @@ export default function TimeExtensionsPage() {
             <Text size="md" fw={600} mb="sm">
               {t('timeExtensions.round')} {roundKey}
             </Text>
-            
+
             <Table>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>{t('timeExtensions.table')}</Table.Th>
-                  <Table.Th w={100}>{t('timeExtensions.minutes')}</Table.Th>
-                  <Table.Th w={100} style={{ textAlign: 'right' }}>{t('timeExtensions.actions')}</Table.Th>
+                  <Table.Th>{t('timeExtensions.category')}</Table.Th>
+                  <Table.Th w={60}>{t('timeExtensions.minutes')}</Table.Th>
+                  <Table.Th w={80} style={{ textAlign: 'right' }}>{t('timeExtensions.actions')}</Table.Th>
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
                 {groupedExtensions[roundKey].map(ext => (
                   <Table.Tr key={ext.id}>
                     <Table.Td>{ext.table}</Table.Td>
+                    <Table.Td>{ext.category ? t(`timeExtensions.${ext.category}`) : '—'}</Table.Td>
                     <Table.Td>
                       {editingId === ext.id ? (
                         <TextInput

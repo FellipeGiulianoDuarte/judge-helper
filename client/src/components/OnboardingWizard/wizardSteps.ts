@@ -155,7 +155,14 @@ export const wizardSteps: WizardStep[] = [
     position: 'top',
   },
 
-  // === TIME EXTENSIONS - 2 steps ===
+  // === TIME EXTENSIONS - 3 steps ===
+  {
+    element: '[data-wizard-category-selector]',
+    titleKey: 'onboarding.steps.categorySelector.title',
+    descriptionKey: 'onboarding.steps.categorySelector.description',
+    targetTab: '/time-extensions',
+    position: 'bottom',
+  },
   {
     element: '[data-wizard-extension-form]',
     titleKey: 'onboarding.steps.extensionForm.title',
@@ -168,6 +175,29 @@ export const wizardSteps: WizardStep[] = [
     titleKey: 'onboarding.steps.extensionTable.title',
     descriptionKey: 'onboarding.steps.extensionTable.description',
     targetTab: '/time-extensions',
+    position: 'top',
+  },
+
+  // === PENALTIES - 3 steps ===
+  {
+    element: '[data-wizard-penalty-form]',
+    titleKey: 'onboarding.steps.penaltyForm.title',
+    descriptionKey: 'onboarding.steps.penaltyForm.description',
+    targetTab: '/penalties',
+    position: 'bottom',
+  },
+  {
+    element: '[data-testid="infraction-select"]',
+    titleKey: 'onboarding.steps.penaltyInfractions.title',
+    descriptionKey: 'onboarding.steps.penaltyInfractions.description',
+    targetTab: '/penalties',
+    position: 'bottom',
+  },
+  {
+    element: '[data-wizard-penalty-history]',
+    titleKey: 'onboarding.steps.penaltyHistory.title',
+    descriptionKey: 'onboarding.steps.penaltyHistory.description',
+    targetTab: '/penalties',
     position: 'top',
   },
 

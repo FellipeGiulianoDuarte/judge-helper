@@ -92,6 +92,10 @@
         "title": "Full Screen Display",
         "description": "Open the timer in a new full-screen window for all players to see."
       },
+      "categorySelector": {
+        "title": "Category Selector",
+        "description": "Choose the tournament category: Junior, Senior, or Masters. This helps organize extensions by player category."
+      },
       "extensionForm": {
         "title": "Add Extension",
         "description": "Record time extensions by entering the round number, table, and minutes granted."
@@ -103,6 +107,18 @@
       "documents": {
         "title": "Official Documents",
         "description": "Quick access to official Pokemon TCG tournament rules, penalty guidelines, and reference materials."
+      },
+      "penaltyForm": {
+        "title": "Penalty Form",
+        "description": "Register penalties by entering the player name, round number, selecting the infraction category, and the penalty applied."
+      },
+      "penaltyInfractions": {
+        "title": "Infraction Categories",
+        "description": "Select from official Play! Pokemon infraction categories. The penalty applied field auto-fills with the default penalty for that infraction."
+      },
+      "penaltyHistory": {
+        "title": "Penalty History",
+        "description": "View all registered penalties grouped by player. Search by player name, delete individual entries, or clear all records."
       }
     }
   },
@@ -111,12 +127,14 @@
     "deckCheck": "Deck Check",
     "documents": "Documents",
     "roundTimer": "Round Timer",
-    "timeExtensions": "Extensions"
+    "timeExtensions": "Extensions",
+    "penalties": "Penalties"
   },
   "documents": {
     "title": "Official Documents",
     "tournamentRules": "Tournament Rules Handbook",
     "penaltyGuidelines": "Penalty Guidelines",
+    "penaltyDisclaimer": "Penalty suggestions follow the official rulebook recommendations but may be escalated or de-escalated based on context and investigation.",
     "rulebook": "TCG Rulebook (PDF)",
     "bannedCards": "TCG Banned Card List",
     "tcgTournamentHandbook": "TCG Tournament Handbook",
@@ -197,7 +215,37 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "noExtensions": "No extensions registered"
+    "noExtensions": "No extensions registered",
+    "category": "Category",
+    "junior": "Junior",
+    "senior": "Senior",
+    "masters": "Masters"
+  },
+  "penalties": {
+    "title": "Penalties",
+    "playerNamePlaceholder": "Player name",
+    "roundPlaceholder": "Round",
+    "infractionLabel": "Infraction",
+    "infractionPlaceholder": "Select infraction...",
+    "penaltyAppliedLabel": "Penalty Applied",
+    "penaltyAppliedPlaceholder": "Select penalty...",
+    "notesPlaceholder": "Notes (optional)",
+    "add": "ADD",
+    "searchPlaceholder": "Search by player name...",
+    "clearAll": "CLEAR ALL",
+    "noPenalties": "No penalties registered",
+    "round": "Round",
+    "infraction": "Infraction",
+    "penaltyApplied": "Penalty",
+    "notes": "Notes",
+    "actions": "Actions",
+    "delete": "Delete",
+    "confirmClearTitle": "Confirm Clear All",
+    "confirmClearMessage": "Are you sure you want to clear all penalty records?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "exportCsv": "Export CSV",
+    "player": "Player"
   },
   "credits": {
     "title": "Credits",
