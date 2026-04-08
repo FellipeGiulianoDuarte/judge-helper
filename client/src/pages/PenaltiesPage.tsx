@@ -145,10 +145,12 @@ export default function PenaltiesPage() {
     if (penalties.length === 0) return;
 
     const escapeCsv = (val: string) => {
-      if (val.includes(',') || val.includes('"') || val.includes('\n')) {
-        return `"${val.replace(/"/g, '""')}"`;
+      let s = String(val);
+      if (/^[=+\-@]/.test(s)) s = `'${s}`;
+      if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+        return `"${s.replace(/"/g, '""')}"`;
       }
-      return val;
+      return s;
     };
 
     const header = [
@@ -158,7 +160,7 @@ export default function PenaltiesPage() {
       t('penalties.penaltyApplied'),
     ].join(',');
 
-    const rows = penalties
+    const rows = [...penalties]
       .sort((a, b) => a.round - b.round)
       .map(p =>
         [String(p.round), p.playerName, p.infraction, p.penaltyApplied]
@@ -171,7 +173,8 @@ export default function PenaltiesPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    const today = new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     link.download = `penalties_${today}.csv`;
     link.click();
     URL.revokeObjectURL(url);
@@ -283,11 +286,12 @@ export default function PenaltiesPage() {
 
       {/* Export CSV + Clear All (only when there are penalties) */}
       {penalties.length > 0 && (
-        <Group grow gap="sm">
+        <Stack gap="sm">
           <Button
             variant="light"
             leftSection={<IconDownload />}
             onClick={handleExportCsv}
+            fullWidth
           >
             {t('penalties.exportCsv')}
           </Button>
@@ -295,10 +299,11 @@ export default function PenaltiesPage() {
             variant="outline"
             color="red"
             onClick={() => setConfirmClearOpen(true)}
+            fullWidth
           >
             {t('penalties.clearAll')}
           </Button>
-        </Group>
+        </Stack>
       )}
 
       {/* Penalty History */}
