@@ -229,6 +229,10 @@ export default function PenaltiesPage() {
             {t('penalties.title')}
           </Text>
 
+          <Text size="xs" c="dimmed" fs="italic">
+            {t('documents.penaltyDisclaimer')}
+          </Text>
+
           <TextInput
             placeholder={t('penalties.playerNamePlaceholder')}
             value={playerName}

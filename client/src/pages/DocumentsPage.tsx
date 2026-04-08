@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Stack, Paper, Text, useMantineTheme, useComputedColorScheme } from '@mantine/core';
 
@@ -59,34 +58,28 @@ export function DocumentsPage() {
   return (
     <Stack gap="sm" p="md" data-wizard-documents>
       {documents.map((doc) => (
-        <React.Fragment key={doc.key}>
-          <Paper
-            data-testid="document-card"
-            component="a"
-            href={getLocalizedUrl(doc.url, i18n.language)}
-            target="_blank"
-            rel="noopener noreferrer"
-            p="md"
-            withBorder
-            style={{
-              minHeight: 56,
-              display: 'flex',
-              alignItems: 'center',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              backgroundColor: cardBackground,
-            }}
-          >
-            <Text fw={500} data-testid="document-card-text" style={{ color: textColor }}>
-              {t(`documents.${doc.key}`)}
-            </Text>
-          </Paper>
-          {doc.key === 'penaltyGuidelines' && (
-            <Text size="xs" c="dimmed" fs="italic" px="xs" mt={-4}>
-              {t('documents.penaltyDisclaimer')}
-            </Text>
-          )}
-        </React.Fragment>
+        <Paper
+          key={doc.key}
+          data-testid="document-card"
+          component="a"
+          href={getLocalizedUrl(doc.url, i18n.language)}
+          target="_blank"
+          rel="noopener noreferrer"
+          p="md"
+          withBorder
+          style={{
+            minHeight: 56,
+            display: 'flex',
+            alignItems: 'center',
+            textDecoration: 'none',
+            cursor: 'pointer',
+            backgroundColor: cardBackground,
+          }}
+        >
+          <Text fw={500} data-testid="document-card-text" style={{ color: textColor }}>
+            {t(`documents.${doc.key}`)}
+          </Text>
+        </Paper>
       ))}
     </Stack>
   );
