@@ -134,6 +134,7 @@
     "title": "Documentos Oficiales",
     "tournamentRules": "Manual de Reglas de Torneo",
     "penaltyGuidelines": "Directrices de Penalización",
+    "penaltyDisclaimer": "Las sugerencias de penalización siguen las recomendaciones oficiales del reglamento, pero pueden ser agravadas o atenuadas según el contexto y la investigación.",
     "rulebook": "Libro de Reglas TCG (PDF)",
     "bannedCards": "Lista de Cartas Prohibidas TCG",
     "tcgTournamentHandbook": "Manual de Torneo TCG",
@@ -242,7 +243,9 @@
     "confirmClearTitle": "Confirmar Limpieza",
     "confirmClearMessage": "¿Está seguro de que desea borrar todos los registros de penalización?",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "exportCsv": "Exportar CSV",
+    "player": "Jugador"
   },
   "credits": {
     "title": "Créditos",
