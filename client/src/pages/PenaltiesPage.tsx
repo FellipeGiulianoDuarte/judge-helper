@@ -3,6 +3,14 @@ import { Stack, Paper, TextInput, Button, Group, Text, Select, Textarea, Table, 
 import { useTranslation } from 'react-i18next';
 
 // Simple SVG icons
+const IconDownload = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
 const IconTrash = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="3 6 5 6 21 6" />
@@ -133,6 +141,45 @@ export default function PenaltiesPage() {
     setConfirmClearOpen(false);
   };
 
+  const handleExportCsv = () => {
+    if (penalties.length === 0) return;
+
+    const escapeCsv = (val: string) => {
+      let s = String(val);
+      if (/^[=+\-@]/.test(s)) s = `'${s}`;
+      if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+        return `"${s.replace(/"/g, '""')}"`;
+      }
+      return s;
+    };
+
+    const header = [
+      t('penalties.round'),
+      t('penalties.player'),
+      t('penalties.infraction'),
+      t('penalties.penaltyApplied'),
+    ].join(',');
+
+    const rows = [...penalties]
+      .sort((a, b) => a.round - b.round)
+      .map(p =>
+        [String(p.round), p.playerName, p.infraction, p.penaltyApplied]
+          .map(escapeCsv)
+          .join(',')
+      );
+
+    const csv = [header, ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    link.download = `penalties_${today}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   // Build grouped select data for infractions
   const infractionSelectData = (() => {
     const groups: Record<string, { value: string; label: string }[]> = {};
@@ -237,16 +284,26 @@ export default function PenaltiesPage() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      {/* Clear All button (only when there are penalties) */}
+      {/* Export CSV + Clear All (only when there are penalties) */}
       {penalties.length > 0 && (
-        <Button
-          variant="outline"
-          color="red"
-          onClick={() => setConfirmClearOpen(true)}
-          fullWidth
-        >
-          {t('penalties.clearAll')}
-        </Button>
+        <Stack gap="sm">
+          <Button
+            variant="light"
+            leftSection={<IconDownload />}
+            onClick={handleExportCsv}
+            fullWidth
+          >
+            {t('penalties.exportCsv')}
+          </Button>
+          <Button
+            variant="outline"
+            color="red"
+            onClick={() => setConfirmClearOpen(true)}
+            fullWidth
+          >
+            {t('penalties.clearAll')}
+          </Button>
+        </Stack>
       )}
 
       {/* Penalty History */}
